@@ -26,7 +26,7 @@ const Banner = () => {
   return (
     <div className="relative w-full h-full overflow-hidden g flex flex-col items-center justify-center">
       <div
-        className="flex w-full transition-transform duration-700"
+        className="flex w-full transition-transform duration-700 xsm:my-3 "
         style={{
           transform: `translateX(-${currentIndex * 100}%)`,
           //   width: `${banners.length * 100}%`,
@@ -37,7 +37,7 @@ const Banner = () => {
             key={banner.id}
             src={banner.image}
             alt={`banner-${banner.id}`}
-            className="w-full flex-shrink-0"
+            className="w-full xsm:!h-[100px] flex-shrink-0 object-contain"
           />
         ))}
       </div>
