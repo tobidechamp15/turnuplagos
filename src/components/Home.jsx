@@ -57,7 +57,7 @@ const Home = () => {
 
       {/* Event Carousel */}
       <section className="flex flex-col justify-around my-[40px] w-full container">
-        <section className="flex justify-around items-center my-3">
+        <section className="flex justify-around items-center mt-2">
           {/* Left Arrow */}
 
           {/* Scrollable Container */}
@@ -68,7 +68,7 @@ const Home = () => {
             {events.map((event) => (
               <div
                 key={event.id}
-                className="flex flex-col xsm:gap-6 xsm:min-w-[300px] md:min-w-[350px] xsm:max-w-[300px] md:gap-[32px] border border-gray-600 items-center justify-center rounded-xl p-[19px] shrink-0"
+                className="flex flex-col xsm:gap-6 xsm:min-w-[300px] md:min-w-[350px] md:max-w-[350px] xsm:max-w-[300px] md:gap-[32px] border border-gray-600 items-center justify-center rounded-xl p-[19px] shrink-0"
               >
                 {/* Event Header */}
                 <div className="flex justify-between w-full">
