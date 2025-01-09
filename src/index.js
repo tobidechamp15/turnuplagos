@@ -16,6 +16,14 @@ import TicketInfo from "./components/TicketInfo";
 import EventMarket from "./components/EventMarket";
 import EventReview from "./components/EventReview";
 import PaystackPayment from "./components/PaystackPayment";
+import Dashboard from "./components/admin/Dashboard";
+import Overview from "./components/admin/Overview";
+import ManageEvent from "./components/admin/ManageEvent";
+import ManageBanner from "./components/admin/ManageBanner";
+import Notifications from "./components/admin/Notifications";
+import Profile from "./components/admin/Profile";
+import PromoteSelection from "./components/PromoteSelection";
+import PromoteBanner from "./components/PromoteBanner";
 
 const router = createBrowserRouter([
   {
@@ -28,10 +36,23 @@ const router = createBrowserRouter([
       { path: "/exploreLagos", element: <ExploreLagos /> },
       { path: "/beyondLagos", element: <AllBeyondLagos /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/promote-selection", element: <PromoteSelection /> },
+      { path: "/promote-banner", element: <PromoteBanner /> },
       { path: "/promote-event", element: <PromoteEvent /> },
       { path: "/ticket-info", element: <TicketInfo /> },
       { path: "/event-market", element: <EventMarket /> },
       { path: "/event-review", element: <EventReview /> },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      { path: "/dashboard/overview", element: <Overview /> },
+      { path: "/dashboard/manage-event", element: <ManageEvent /> },
+      { path: "/dashboard/manage-banners", element: <ManageBanner /> },
+      { path: "/dashboard/notification", element: <Notifications /> },
+      { path: "/dashboard/profile", element: <Profile /> },
     ],
   },
   { path: "/event-details/:id", element: <EventDetails /> },
