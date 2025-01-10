@@ -160,7 +160,7 @@ const EditTicket = ({ ticketInfo, id, setEditTicketActive }) => {
 
         <button
           type="submit"
-          className="py-3 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="py-3 px-6 bg-[#4F46E5] text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         >
           Save Changes
         </button>

@@ -133,7 +133,10 @@ const EditEvent = ({ event, setEditEventActive, id }) => {
           >
             Cancel
           </button>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn bg-[#4F46E5] text-white hover:bg-purple-600"
+          >
             Save Changes
           </button>
         </div>
