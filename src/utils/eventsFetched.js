@@ -1,4 +1,4 @@
-import { updateDoc } from "firebase/firestore";
+import { deleteDoc, updateDoc } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import {
   addDoc,
@@ -151,3 +151,65 @@ const createTickets = async (eventId, purchaseDetails, userEmail) => {
 };
 
 export default createTickets;
+export const updateEvent = async (eventId, updatedData) => {
+  try {
+    if (!eventId) {
+      throw new Error("Event ID is missing");
+    }
+
+    // Reference to the specific event document
+    const eventDocRef = doc(db, "events", eventId);
+
+    // Prepare the data to update under eventFormData
+    const dataToUpdate = {
+      eventFormData: {
+        ...updatedData, // Spread the updated data into eventFormData
+      },
+    };
+
+    // Log the eventId and dataToUpdate for debugging
+    console.log("Updating event with ID:", eventId);
+    console.log("Data to update:", dataToUpdate);
+
+    // Update the Firestore document with the new eventFormData
+    await updateDoc(eventDocRef, dataToUpdate);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating event:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const updateTicket = async (updatedTicket, id) => {
+  try {
+    const ticketDocRef = doc(db, "events", id); // Assuming ticket has an ID field
+
+    const dataToUpdate = {
+      ticketInfo: {
+        ...updatedTicket, // Spread the updated data into eventFormData
+      },
+    };
+    await updateDoc(ticketDocRef, dataToUpdate);
+
+    return { success: true, dataToUpdate };
+  } catch (error) {
+    console.error("Error updating ticket:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const deleteEvent = async (eventId) => {
+  try {
+    // Reference to the specific event document
+    const eventDocRef = doc(db, "events", eventId);
+
+    // Delete the document
+    await deleteDoc(eventDocRef);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return { success: false, error: error.message };
+  }
+};

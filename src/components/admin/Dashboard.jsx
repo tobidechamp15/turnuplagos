@@ -71,7 +71,7 @@ const Dashboard = () => {
     <section className="w-100 bg-white">
       {/* Sidebar */}
       <section
-        className={`flex w-fit overflow-auto bg-white border-r text-left text-[16px] font-medium leading-[24px] justify-between h-full flex-col max-h-screen !overflow-y-auto side-shadow z-50 fixed transition-all ease-in-out duration-700 ${
+        className={`flex  w-fit overflow-auto bg-white border-r text-left text-[16px] font-medium leading-[24px] justify-between h-full flex-col max-h-screen !overflow-y-auto side-shadow z-50 fixed transition-all ease-in-out duration-700 ${
           sidebarOpen ? "left-0" : "xsm:-left-[104px]"
         }`}
         ref={sidebarRef}
@@ -126,7 +126,7 @@ const Dashboard = () => {
       </section>
 
       {/* Main Content */}
-      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 h-screen">
+      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 h-screen md:relative">
         <Navbar toggleSidebar={toggleSidebar} />
         {/* <div className="flex md:hidden w-100 py-3 items-center justify-between top-bar px-9">
           <img
@@ -141,7 +141,7 @@ const Dashboard = () => {
             onClick={toggleSidebar}
           />
         </div> */}
-        <div className="pt-[24px] px-9 overflow-y-auto">
+        <div className="pt-[24px] md:px-9 overflow-y-auto xsm:px-2 ">
           <Outlet />
         </div>
       </section>

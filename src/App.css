@@ -1,5 +1,6 @@
 body {
   color: black !important;
+  background-color: #ffffff !important;
   font-family: Inter, sans-serif;
   box-sizing: border-box;
   margin: 0;
@@ -7,12 +8,21 @@ body {
 }
 .nav-bg {
   color: white !important;
-  background-color: #000000d8 !important; /* Pure black background */
+  background-color: #202224 !important; /* Pure black background */
   background-image: url("./assets/navBgImg.svg");
   background-blend-mode: multiply; /* Ensures the image blends with the black */
   background-size: cover; /* Adjust image size to cover the entire background */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling of the image */
+}
+.admin-top {
+  display: flex;
+  background: #ffffff;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05),
+    inset 0px 0px 0px 1px rgba(16, 24, 40, 0.18),
+    inset 0px -2px 0px rgba(16, 24, 40, 0.05);
+  border-radius: 16px;
 }
 
 .pending-section {
@@ -34,4 +44,14 @@ body {
     inset 0px 0px 0px 1px rgba(16, 24, 40, 0.18),
     inset 0px -2px 0px rgba(16, 24, 40, 0.05);
   border-radius: 16px;
+}
+.custom-modal {
+  background: rgba(0, 0, 0, 0.7);
+}
+/*media screen from 783 to 1100*/
+@media screen and (min-width: 768px) and (max-width: 930px) {
+  .custom-layout {
+    display: flex;
+    flex-direction: column;
+  }
 }

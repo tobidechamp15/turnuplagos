@@ -24,6 +24,7 @@ import Notifications from "./components/admin/Notifications";
 import Profile from "./components/admin/Profile";
 import PromoteSelection from "./components/PromoteSelection";
 import PromoteBanner from "./components/PromoteBanner";
+import ViewEvent from "./components/admin/ViewEvent.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,7 +50,12 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       { path: "/dashboard/overview", element: <Overview /> },
-      { path: "/dashboard/manage-event", element: <ManageEvent /> },
+      {
+        path: "/dashboard/manage-event",
+        element: <ManageEvent />,
+      },
+      { path: "/dashboard/manage-event/:id", element: <ViewEvent /> }, // Nested route for ViewEvent
+
       { path: "/dashboard/manage-banners", element: <ManageBanner /> },
       { path: "/dashboard/notification", element: <Notifications /> },
       { path: "/dashboard/profile", element: <Profile /> },
@@ -58,6 +64,7 @@ const router = createBrowserRouter([
   { path: "/event-details/:id", element: <EventDetails /> },
   { path: "/ticket-sale/:id", element: <EventDetails /> },
   { path: "/pay-stack", element: <PaystackPayment /> },
+  { path: ":id", element: <ViewEvent /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
