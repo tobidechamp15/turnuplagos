@@ -126,7 +126,7 @@ const Dashboard = () => {
       </section>
 
       {/* Main Content */}
-      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 h-screen md:relative">
+      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 min-h-screen md:relative">
         <Navbar toggleSidebar={toggleSidebar} />
         {/* <div className="flex md:hidden w-100 py-3 items-center justify-between top-bar px-9">
           <img

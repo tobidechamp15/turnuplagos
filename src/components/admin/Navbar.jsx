@@ -16,7 +16,7 @@ const Navbar = ({ toggleSidebar }) => {
       </div>
       <FontAwesomeIcon
         icon={faBars}
-        className="text-3xl text-blue-700 flex d-none-md"
+        className="text-3xl text-blue-700 flex md:hidden"
         onClick={toggleSidebar}
       />
     </nav>

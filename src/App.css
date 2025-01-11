@@ -46,7 +46,22 @@ body {
   border-radius: 16px;
 }
 .custom-modal {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.54);
+}
+.modal-banner {
+  background-color: #202224d6;
+  color: white;
+  padding: 16px;
+  padding-top: 150px;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: 0;
 }
 /*media screen from 783 to 1100*/
 @media screen and (min-width: 768px) and (max-width: 930px) {

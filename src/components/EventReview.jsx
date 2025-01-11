@@ -86,6 +86,7 @@ const EventReview = () => {
         // Upload event details to Firestore, including email
         await addDoc(collection(db, "events"), {
           ...eventDetails,
+          status: "pending",
           email, // Make sure email is added here
           uploadedAt: new Date(), // Add a timestamp
         });
@@ -172,7 +173,7 @@ const EventReview = () => {
   };
 
   return (
-    <div className="container-md mt-[48px] p-0">
+    <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#FFDE00]">Review</span>
       </span>
@@ -226,7 +227,7 @@ const EventReview = () => {
           <div className="flex flex-col gap-3 text-white event-details xsm:w-full">
             <h3>{eventDetails.eventFormData.name}</h3>
             <p>{eventDetails.eventFormData.description}</p>
-            <h3>Details</h3>
+            <h3 className="text-xl">Details</h3>
             <ul>
               <li>Venue: {eventDetails.eventFormData.venue}</li>
               <li>Date: {eventDetails.eventFormData.date}</li>

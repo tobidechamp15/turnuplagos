@@ -28,6 +28,24 @@ export const fetchEvents = async () => {
     return { success: false, error: error.message };
   }
 };
+export const fetchBanner = async () => {
+  try {
+    const bannerRef = collection(db, "banner");
+    const bannerQuery = query(bannerRef, orderBy("uploadedAt", "desc")); // Order events by uploadedAt
+    const querySnapshot = await getDocs(bannerQuery);
+
+    const banner = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    console.log(banner, "banner");
+    return { success: true, banner };
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return { success: false, error: error.message };
+  }
+};
 
 fetchEvents();
 
@@ -151,6 +169,7 @@ const createTickets = async (eventId, purchaseDetails, userEmail) => {
 };
 
 export default createTickets;
+
 export const updateEvent = async (eventId, updatedData) => {
   try {
     if (!eventId) {
@@ -210,6 +229,36 @@ export const deleteEvent = async (eventId) => {
     return { success: true };
   } catch (error) {
     console.error("Error deleting event:", error);
+    return { success: false, error: error.message };
+  }
+};
+export const deleteBanner = async (bannerId) => {
+  try {
+    // Reference to the specific event document
+    const bannerDocRef = doc(db, "banner", bannerId);
+    const upBannerDocRef = doc(db, "updateBanner", bannerId);
+
+    // Delete the document
+    await deleteDoc(bannerDocRef, upBannerDocRef);
+    alert("Banner Successfully deleted");
+    window.location.reload();
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const replaceBanner = async (bannerId, newBannerData) => {
+  try {
+    const bannerDocRef = doc(db, "banner", bannerId);
+
+    // Update the banner document with new data
+    await updateDoc(bannerDocRef, newBannerData);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error replacing banner:", error);
     return { success: false, error: error.message };
   }
 };

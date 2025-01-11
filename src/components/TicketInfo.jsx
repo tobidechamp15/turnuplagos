@@ -37,7 +37,7 @@ const TicketInfo = () => {
   };
 
   return (
-    <div className="container-md mt-[48px] p-0">
+    <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
         Event <span className=" text-[#FFDE00] ">Information</span>
       </span>
@@ -52,15 +52,17 @@ const TicketInfo = () => {
               name="ticket_type"
               id="ticket_type"
               onChange={(e) => setTicketType(e.target.value)}
-              className="w-full p-2 rounded-lg !bg-transparent border"
+              className="w-full p-2 rounded-lg !bg-transparent border  text-white"
             >
-              <option value="" className="!bg-transparent" disabled>
+              <option value="" className="!bg-transparent text-black" disabled>
                 Select Ticket Type
               </option>
-              <option value="Free" className="!bg-transparent">
+              <option value="Free" className="!bg-transparent text-black">
                 Free
               </option>
-              <option value="Paid">Paid</option>
+              <option value="Paid" className="text-black">
+                Paid
+              </option>
             </select>
           </div>
           {ticketType === "Paid" && (
@@ -97,7 +99,7 @@ const TicketInfo = () => {
                     onChange={(e) =>
                       handleCategoryChange(index, "name", e.target.value)
                     }
-                    className="w-full p-2 rounded-lg bg-transparent border"
+                    className="w-full p-2 rounded-lg bg-transparent border text-white"
                   />
                 </div>
                 <div className="flex flex-col gap-2  md:w-1/2 ">
@@ -112,7 +114,7 @@ const TicketInfo = () => {
                     onChange={(e) =>
                       handleCategoryChange(index, "price", e.target.value)
                     }
-                    className="w-full p-2 rounded-lg bg-transparent border"
+                    className="w-full p-2 rounded-lg bg-transparent border text-white"
                   />
                 </div>
                 <div className="flex flex-col gap-2  md:w-1/2 ">
@@ -127,7 +129,7 @@ const TicketInfo = () => {
                     onChange={(e) =>
                       handleCategoryChange(index, "quantity", e.target.value)
                     }
-                    className="w-full p-2 rounded-lg bg-transparent border"
+                    className="w-full p-2 rounded-lg bg-transparent border text-white"
                   />
                 </div>
               </div>

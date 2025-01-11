@@ -86,7 +86,7 @@ const EventMarket = () => {
   };
 
   return (
-    <div className="container-md mt-[48px] p-0">
+    <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#FFDE00]">Marketing</span>
       </span>
@@ -147,7 +147,7 @@ const EventMarket = () => {
                   placeholder="Instagram Link"
                   value={socialMediaLinks.instagram}
                   onChange={handleSocialMediaChange}
-                  className="w-full p-2 rounded-lg bg-transparent border"
+                  className="w-full p-2 rounded-lg bg-transparent border text-white"
                 />
                 <input
                   type="text"
@@ -155,7 +155,7 @@ const EventMarket = () => {
                   placeholder="Snapchat Link"
                   value={socialMediaLinks.snapchat}
                   onChange={handleSocialMediaChange}
-                  className="w-full p-2 rounded-lg bg-transparent border"
+                  className="w-full p-2 rounded-lg bg-transparent border text-white"
                 />
                 <input
                   type="text"
@@ -163,7 +163,7 @@ const EventMarket = () => {
                   placeholder="X Link"
                   value={socialMediaLinks.twitter}
                   onChange={handleSocialMediaChange}
-                  className="w-full p-2 rounded-lg bg-transparent border"
+                  className="w-full p-2 rounded-lg bg-transparent border text-white"
                 />
               </div>
             </span>

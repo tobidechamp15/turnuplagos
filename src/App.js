@@ -41,7 +41,7 @@ export default function App() {
         </div>
         <div className="flex gap-2 items-center">
           <NavLink
-            to="/promote-event"
+            to="/promote-selection"
             style={({ isActive }) => ({
               color: isActive ? "#FFDE00" : "#FFFFFFB2", // Active link color
               fontWeight: isActive ? "bold" : "normal", // Active link bold
@@ -52,7 +52,7 @@ export default function App() {
                 : "border rounded-lg h-fit py-2 px-3 xs:hidden"
             }
           >
-            Promote an Event
+            Promote With us
           </NavLink>
           <button
             aria-label="Toggle Sidebar"
