@@ -25,6 +25,7 @@ import Profile from "./components/admin/Profile";
 import PromoteSelection from "./components/PromoteSelection";
 import PromoteBanner from "./components/PromoteBanner";
 import ViewEvent from "./components/admin/ViewEvent.jsx";
+import AdminLoader from "./components/admin/AdminLoader.jsx";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,7 @@ const router = createBrowserRouter([
   { path: "/ticket-sale/:id", element: <EventDetails /> },
   { path: "/pay-stack", element: <PaystackPayment /> },
   { path: ":id", element: <ViewEvent /> },
+  { path: "/loader", element: <AdminLoader /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

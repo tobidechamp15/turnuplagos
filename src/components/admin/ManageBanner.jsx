@@ -13,6 +13,7 @@ import {
   replaceUploadedBanner,
 } from "../../utils/upload";
 import ConfirmDeleteBanner from "./ConfirmDeleteBanner";
+import AdminLoader from "./AdminLoader";
 
 const ManageBanner = () => {
   const [banner, setBanner] = useState([]);
@@ -101,11 +102,11 @@ const ManageBanner = () => {
       setCurrentPage(pageNumber);
     }
   };
+  if (isLoading) return <AdminLoader />;
 
   return (
     <div className="p-4">
       <h2 className="text-lg font-bold mb-4">Banners Management</h2>
-
       <section className="flex flex-col md:flex-row md:gap-4 my-4">
         <button
           className="btn btn-light w-full"
@@ -118,86 +119,79 @@ const ManageBanner = () => {
           <FontAwesomeIcon icon={faRepeat} /> Replace Banner
         </button>
       </section>
-
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-
-      {isLoading ? (
-        <p>Loading banners...</p>
-      ) : (
-        <>
-          {banner.length > 0 ? (
-            currentBanner.map((bannerItem, index) => (
-              <div
-                key={bannerItem.id || index}
-                className="flex w-full justify-between items-center gap-2 border p-4 rounded-md shadow-sm mb-4"
-              >
-                <div className="flex gap-2 items-center">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedBanners.includes(bannerItem.id)}
-                      onChange={() => handleCheckboxChange(bannerItem.id)}
-                    />
-                  </label>
-                  <span>Banner {index + 1}</span>
-                </div>
-                {deleteConfirmation && (
-                  <ConfirmDeleteBanner
-                    handleDeleteBanner={deleteBanner}
-                    id={bannerItem.id}
-                    setDeleteConfirmation={setDeleteConfirmation}
+      <>
+        {banner.length > 0 ? (
+          currentBanner.map((bannerItem, index) => (
+            <div
+              key={bannerItem.id || index}
+              className="flex w-full justify-between items-center gap-2 border p-4 rounded-md shadow-sm mb-4"
+            >
+              <div className="flex gap-2 items-center">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedBanners.includes(bannerItem.id)}
+                    onChange={() => handleCheckboxChange(bannerItem.id)}
                   />
-                )}
-                <div className="flex gap-2">
-                  <FontAwesomeIcon
-                    icon={faEye}
-                    onClick={() => openModal(bannerItem)}
-                    className="cursor-pointer"
-                  />
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    onClick={() => setDeleteConfirmation(true)}
-                    className="cursor-pointer text-danger"
-                  />
-                </div>
+                </label>
+                <span>Banner {index + 1}</span>
               </div>
-            ))
-          ) : (
-            <p>No banners available.</p>
-          )}
+              {deleteConfirmation && (
+                <ConfirmDeleteBanner
+                  handleDeleteBanner={deleteBanner}
+                  id={bannerItem.id}
+                  setDeleteConfirmation={setDeleteConfirmation}
+                />
+              )}
+              <div className="flex gap-2">
+                <FontAwesomeIcon
+                  icon={faEye}
+                  onClick={() => openModal(bannerItem)}
+                  className="cursor-pointer"
+                />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  onClick={() => setDeleteConfirmation(true)}
+                  className="cursor-pointer text-danger"
+                />
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No banners available.</p>
+        )}
 
-          <div className="flex justify-center items-center gap-2 mt-6">
+        <div className="flex justify-center items-center gap-2 mt-6">
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, index) => (
             <button
-              className="btn btn-outline-secondary"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
+              key={index}
+              className={`btn ${
+                currentPage === index + 1
+                  ? "btn-primary"
+                  : "btn-outline-primary"
+              }`}
+              onClick={() => handlePageChange(index + 1)}
             >
-              Previous
+              {index + 1}
             </button>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                className={`btn ${
-                  currentPage === index + 1
-                    ? "btn-primary"
-                    : "btn-outline-primary"
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              className="btn btn-outline-secondary"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
-        </>
-      )}
-
+          ))}
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </>
       {/* Modal for Viewing Banner */}
       {modalIsOpen && (
         <div className="modal-banner flex-grow">

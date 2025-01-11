@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { fetchEvents } from "../../utils/eventsFetched";
 import { Link } from "react-router-dom";
+import AdminLoader from "./AdminLoader";
 
 const ManageEvent = () => {
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const itemsPerPage = 10;
 
   const handleFetchEvents = async () => {
+    setIsLoading(true);
+
     try {
       const response = await fetchEvents();
       if (response.success) {
@@ -17,6 +21,8 @@ const ManageEvent = () => {
       }
     } catch (error) {
       console.error("Error fetching events:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,9 +45,9 @@ const ManageEvent = () => {
       setCurrentPage(pageNumber);
     }
   };
-
   return (
     <div>
+      {isLoading && <AdminLoader />}
       <div className="pending-section">
         <span className="text-[#4A5154]">Pending</span>
         {currentEvents.map((event, index) => (

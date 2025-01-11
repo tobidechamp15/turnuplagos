@@ -8,6 +8,7 @@ import EditEvent from "./EditEvent";
 import EditTicket from "./EditTicket";
 import { deleteEvent } from "../../utils/eventsFetched.js";
 import ConfirmDelete from "./ConfirmDelete.jsx";
+import AdminLoader from "./AdminLoader.jsx";
 
 const ViewEvent = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const ViewEvent = () => {
     getEvent();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <AdminLoader />;
 
   if (error) return <div>Error: {error}</div>;
 

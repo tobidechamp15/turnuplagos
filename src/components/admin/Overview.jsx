@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faX } from "@fortawesome/free-solid-svg-icons";
 import { uploadNewBanner, uploadNewEvent } from "../../utils/upload";
+import AdminLoader from "./AdminLoader";
 
 const Overview = () => {
   // Fetch events
@@ -88,7 +89,7 @@ const Overview = () => {
       alert("Failed to delete event:");
     }
   };
-  if (isLoading) <div>Loading--..</div>;
+  if (isLoading) return <AdminLoader />;
   return (
     <div>
       <div className="pending-section">
