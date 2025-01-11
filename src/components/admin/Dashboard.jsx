@@ -12,6 +12,7 @@ import notificationIcon from "../../assets/notificationIcon.svg";
 import Logout from "./Logout";
 import "../../App.css";
 import Navbar from "./Navbar";
+import profileImg from "../../assets/manAvatar.svg";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
@@ -120,13 +121,37 @@ const Dashboard = () => {
             </section>
 
             {/* Logout */}
-            <Logout />
+            <div className="flex flex-col gap-2 items-center justify-center">
+              <NavLink
+                key="profile"
+                to="/dashboard/profile"
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? "active-tab bg-[#FFC1301A] border-[#FFC130] text-black"
+                      : "inActive-tab text-[#667085]"
+                  } flex w-full gap-3 py-2 px-3 hover:bg-gray-300 rounded-[8px]`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <img
+                      src={isActive ? profileImg : profileImg}
+                      alt="profile avatar"
+                      className="w-[20px]"
+                    />
+                  </>
+                )}
+              </NavLink>
+
+              <Logout />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 min-h-screen md:relative">
+      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 min-h-screen md:relative bg-[#F5F6FA]">
         <Navbar toggleSidebar={toggleSidebar} />
         {/* <div className="flex md:hidden w-100 py-3 items-center justify-between top-bar px-9">
           <img

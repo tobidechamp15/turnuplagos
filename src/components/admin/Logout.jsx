@@ -3,9 +3,9 @@ import logOutIcon from "../../assets/logoutIcon.svg";
 
 const Logout = () => {
   return (
-    <div>
-      <img src={logOutIcon} alt="logout" />
-    </div>
+    <>
+      <img src={logOutIcon} alt="logout" className="w-[20px]" />
+    </>
   );
 };
 

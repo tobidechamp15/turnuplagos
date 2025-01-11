@@ -45,9 +45,11 @@ const ManageEvent = () => {
       setCurrentPage(pageNumber);
     }
   };
+
+  if (isLoading) return <AdminLoader />;
+
   return (
     <div>
-      {isLoading && <AdminLoader />}
       <div className="pending-section">
         <span className="text-[#4A5154]">Pending</span>
         {currentEvents.map((event, index) => (
