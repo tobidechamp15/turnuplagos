@@ -6,7 +6,6 @@ import {
   orderBy,
   doc,
   deleteDoc,
-  addDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../components/firebase/config";
@@ -89,7 +88,9 @@ export const uploadNewBanner = async (bannerData) => {
     });
 
     alert("Banner uploaded successfully!");
-    return { success: true };
+    let loading = true;
+    window.location.reload();
+    return { success: true, loading };
   } catch (error) {
     console.error("Error uploading banner:", error);
     return { success: false, error: error.message };
@@ -136,7 +137,7 @@ export const replaceUploadedBanner = async (selectedBanners, newBannerData) => {
     const batch = writeBatch(db);
 
     selectedBanners.forEach((bannerId) => {
-      const bannerDocRef = doc(db, "uploadedBanners", bannerId);
+      const bannerDocRef = doc(db, "banner", bannerId);
       batch.update(bannerDocRef, {
         ...newBannerData,
         updatedAt: new Date(),

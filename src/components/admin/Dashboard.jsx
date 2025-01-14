@@ -12,11 +12,16 @@ import notificationIcon from "../../assets/notificationIcon.svg";
 import Logout from "./Logout";
 import "../../App.css";
 import Navbar from "./Navbar";
-import profileImg from "../../assets/manAvatar.svg";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { fetchAdminByEmail } from "../../utils/fetchAdmin";
+import AdminLoader from "./AdminLoader";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
   const sidebarRef = useRef(null); // Ref for sidebar
+  const [user, setUser] = useState(null);
+  const [admin, setAdmin] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Define dropdown data for both roles
   const dropdownData = [
@@ -67,13 +72,49 @@ const Dashboard = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        console.log("Logged in user:", user);
+      } else {
+        console.log("No user is logged in");
+      }
+    });
+
+    return () => unsubscribe(); // Clean up the subscription when the component unmounts
+  }, [auth]);
+
+  useEffect(() => {
+    if (user?.email) {
+      // Fetch admin data only if user email is available
+      const fetchData = async () => {
+        try {
+          setIsLoading(true);
+          const response = await fetchAdminByEmail(user.email);
+          if (response.success) {
+            setAdmin(response?.admin);
+            console.log(response?.admin);
+          }
+        } catch (error) {
+          console.error("Error fetching admin:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchData();
+    }
+  }, [user]);
+  if (isLoading) <AdminLoader />;
 
   return (
     <section className="w-100 bg-white">
       {/* Sidebar */}
       <section
-        className={`flex  w-fit overflow-auto bg-white border-r text-left text-[16px] font-medium leading-[24px] justify-between h-full flex-col max-h-screen !overflow-y-auto side-shadow z-50 fixed transition-all ease-in-out duration-700 ${
-          sidebarOpen ? "left-0" : "xsm:-left-[104px]"
+        className={`flex  w-fit overflow-auto bg-white border-r text-left text-[16px] font-medium leading-[24px] justify-between h-full flex-col max-h-screen !overflow-y-auto side-shadow z-50 fixed transition-all ease-in-out duration-300 ${
+          sidebarOpen ? "left-0" : "xsm:-left-[205px]"
         }`}
         ref={sidebarRef}
         id="side-bar"
@@ -121,7 +162,7 @@ const Dashboard = () => {
             </section>
 
             {/* Logout */}
-            <div className="flex flex-col gap-2 items-center justify-center">
+            <div className="flex flex-col gap-4 items-center justify-center">
               <NavLink
                 key="profile"
                 to="/dashboard/profile"
@@ -136,9 +177,13 @@ const Dashboard = () => {
                 {({ isActive }) => (
                   <>
                     <img
-                      src={isActive ? profileImg : profileImg}
+                      src={
+                        isActive
+                          ? user?.photoURL || admin?.photoURL
+                          : user?.photoURL || admin?.photoURL
+                      }
                       alt="profile avatar"
-                      className="w-[20px]"
+                      className="w-[44px]"
                     />
                   </>
                 )}
@@ -151,7 +196,7 @@ const Dashboard = () => {
       </section>
 
       {/* Main Content */}
-      <section className="flex flex-col md:ms-[106px] overflow-y-auto pb-4 min-h-screen md:relative bg-[#F5F6FA]">
+      <section className="flex flex-col md:ms-[124px] overflow-y-auto pb-4 min-h-screen md:relative bg-[#F5F6FA]">
         <Navbar toggleSidebar={toggleSidebar} />
         {/* <div className="flex md:hidden w-100 py-3 items-center justify-between top-bar px-9">
           <img

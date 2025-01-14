@@ -25,7 +25,11 @@ import Profile from "./components/admin/Profile";
 import PromoteSelection from "./components/PromoteSelection";
 import PromoteBanner from "./components/PromoteBanner";
 import ViewEvent from "./components/admin/ViewEvent.jsx";
-import AdminLoader from "./components/admin/AdminLoader.jsx";
+import Login from "./components/admin/Login.jsx";
+import Signup from "./components/admin/Signup.jsx";
+import ForgotPassword from "./components/admin/ForgotPassword.jsx";
+import ResetPasswordMessage from "./components/admin/ResetMessage.jsx";
+import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +52,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <ProtectedRoute element={<Dashboard />} />,
     children: [
       { path: "/dashboard/overview", element: <Overview /> },
       {
@@ -66,7 +70,10 @@ const router = createBrowserRouter([
   { path: "/ticket-sale/:id", element: <EventDetails /> },
   { path: "/pay-stack", element: <PaystackPayment /> },
   { path: ":id", element: <ViewEvent /> },
-  { path: "/loader", element: <AdminLoader /> },
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-message", element: <ResetPasswordMessage /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { deleteBanner } from "../../utils/eventsFetched";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -8,12 +7,10 @@ import {
   faUpload,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  fetchUploadedBanners,
-  replaceUploadedBanner,
-} from "../../utils/upload";
 import ConfirmDeleteBanner from "./ConfirmDeleteBanner";
 import AdminLoader from "./AdminLoader";
+import { Link } from "react-router-dom";
+import { fetchBanner, replaceBanner } from "../../utils/eventsFetched";
 
 const ManageBanner = () => {
   const [banner, setBanner] = useState([]);
@@ -24,16 +21,23 @@ const ManageBanner = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [viewedBanner, setViewedBanner] = useState(null); // Track viewed banner for modal
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [selectedBannerId, setSelectedBannerId] = useState(null);
 
   const itemsPerPage = 10;
+
+  const handleDeleteBannerClick = (id) => {
+    setSelectedBannerId(id);
+    console.log(id);
+    setDeleteConfirmation(true);
+  };
 
   const handleFetchEvents = async () => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const response = await fetchUploadedBanners();
+      const response = await fetchBanner();
       if (response.success) {
-        setBanner(response.banners || []);
+        setBanner(response.banner || []);
       } else {
         setErrorMessage("Failed to fetch banners.");
       }
@@ -44,6 +48,7 @@ const ManageBanner = () => {
       setIsLoading(false);
     }
   };
+
   const handleReplaceBanner = async () => {
     if (selectedBanners.length === 0) {
       alert("Please select at least one banner to replace.");
@@ -52,11 +57,8 @@ const ManageBanner = () => {
 
     try {
       const newBannerData = { uploadedAt: new Date() };
-      const response = await replaceUploadedBanner(
-        selectedBanners,
-        newBannerData
-      );
-
+      const response = await replaceBanner(selectedBanners, newBannerData);
+      console.log(selectedBanners, newBannerData);
       if (response.success) {
         alert("Selected banners replaced successfully");
         setSelectedBanners([]);
@@ -102,19 +104,21 @@ const ManageBanner = () => {
       setCurrentPage(pageNumber);
     }
   };
+
   if (isLoading) return <AdminLoader />;
 
   return (
     <div className="p-4">
       <h2 className="text-lg font-bold mb-4">Banners Management</h2>
       <section className="flex flex-col md:flex-row md:gap-4 my-4">
-        <button
+        <Link
+          to="/promote-banner"
           className="btn btn-light w-full"
           // onClick={}
         >
           {" "}
           <FontAwesomeIcon icon={faUpload} /> Upload Banner
-        </button>
+        </Link>
         <button className="btn btn-light w-full" onClick={handleReplaceBanner}>
           <FontAwesomeIcon icon={faRepeat} /> Replace Banner
         </button>
@@ -122,42 +126,47 @@ const ManageBanner = () => {
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <>
         {banner.length > 0 ? (
-          currentBanner.map((bannerItem, index) => (
-            <div
-              key={bannerItem.id || index}
-              className="flex w-full justify-between items-center gap-2 border p-4 rounded-md shadow-sm mb-4"
-            >
-              <div className="flex gap-2 items-center">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedBanners.includes(bannerItem.id)}
-                    onChange={() => handleCheckboxChange(bannerItem.id)}
+          currentBanner
+            .filter(
+              (bannerItem) =>
+                !bannerItem.status || bannerItem.status === "uploaded"
+            )
+            .map((bannerItem, index) => (
+              <div
+                key={bannerItem.id || index}
+                className="flex w-full justify-between items-center gap-2 border p-4 rounded-md shadow-sm mb-4"
+              >
+                <div className="flex gap-2 items-center">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedBanners.includes(bannerItem.id)}
+                      onChange={() => handleCheckboxChange(bannerItem.id)}
+                    />
+                  </label>
+                  <span>Banner {index + 1}</span>
+                </div>
+                {deleteConfirmation && selectedBannerId && (
+                  <ConfirmDeleteBanner
+                    id={selectedBannerId}
+                    setDeleteConfirmation={setDeleteConfirmation}
                   />
-                </label>
-                <span>Banner {index + 1}</span>
+                )}
+
+                <div className="flex gap-2">
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={() => openModal(bannerItem)}
+                    className="cursor-pointer"
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    onClick={() => handleDeleteBannerClick(bannerItem.id)}
+                    className="cursor-pointer text-danger"
+                  />
+                </div>
               </div>
-              {deleteConfirmation && (
-                <ConfirmDeleteBanner
-                  handleDeleteBanner={deleteBanner}
-                  id={bannerItem.id}
-                  setDeleteConfirmation={setDeleteConfirmation}
-                />
-              )}
-              <div className="flex gap-2">
-                <FontAwesomeIcon
-                  icon={faEye}
-                  onClick={() => openModal(bannerItem)}
-                  className="cursor-pointer"
-                />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  onClick={() => setDeleteConfirmation(true)}
-                  className="cursor-pointer text-danger"
-                />
-              </div>
-            </div>
-          ))
+            ))
         ) : (
           <p>No banners available.</p>
         )}

@@ -135,7 +135,10 @@ const PromoteBanner = () => {
       );
       const newUser = userCredential.user;
       createUserProfile(newUser); // Create user profile in Firestore
-
+      if (email.endsWith("@turnup.com")) {
+        await createAdminProfile(newUser);
+        console.log("Admin profile created!");
+      }
       // Send email verification with a custom link
       await sendEmailVerification(newUser);
       console.log("Verification email sent!");
@@ -154,6 +157,25 @@ const PromoteBanner = () => {
       // Add other user-specific data as needed
     };
     setDoc(userDocRef, userProfileData)
+      .then(() => {
+        return true;
+      })
+      .catch((error) => {
+        console.error(
+          "Error creating user profile:",
+          error,
+          "collection creation error"
+        );
+      });
+  };
+  const createAdminProfile = (user) => {
+    const adminDocRef = doc(db, "admins", user.uid);
+    const userProfileData = {
+      email: user.email,
+      verificationStatus: user.emailVerified,
+      // Add other user-specific data as needed
+    };
+    setDoc(adminDocRef, userProfileData)
       .then(() => {
         return true;
       })

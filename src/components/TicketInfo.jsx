@@ -4,7 +4,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const TicketInfo = () => {
-  const [ticketType, setTicketType] = useState("Free");
+  const [ticketType, setTicketType] = useState("");
   const [categories, setCategories] = useState([
     { name: "", price: "", quantity: "" },
   ]);

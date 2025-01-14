@@ -74,14 +74,26 @@ const PromoteEvent = () => {
             <select
               name="state"
               id=""
-              value={formData.start_time}
+              value={formData.state}
               required
               onChange={handleChange}
               className="w-full p-2 rounded-lg bg-transparent border text-white"
             >
-              <option value="">Select a state</option>
-              <option value="Within Lagos">Within Lagos</option>
-              <option value="Beyond Lagos">Beyond Lagos</option>
+              <option value="" className="text-black bg-transparent">
+                Select a state
+              </option>
+              <option
+                value="Within Lagos"
+                className="text-black bg-transparent"
+              >
+                Within Lagos
+              </option>
+              <option
+                value="Beyond Lagos"
+                className="text-black bg-transparent"
+              >
+                Beyond Lagos
+              </option>
             </select>
             {/* <input
               type="text"
@@ -119,7 +131,7 @@ const PromoteEvent = () => {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className="w-full p-2 rounded-lg bg-transparent border text-white"
+              className="w-full p-2 rounded-lg bg-transparent border text-white form-control"
             />
           </div>
           <div className="flex flex-col gap-2 p-2 md:w-1/2">

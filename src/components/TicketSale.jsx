@@ -166,7 +166,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
 
   return (
     <div className="h-screen fixed flex items-center justify-center top-0 left-0 w-full bg-[#00000067]">
-      <div className="bg-[#180707] border !border-[#FFDE00] flex flex-col xsm:w-[80%] sm:w-[70%] md:w-[400px] min-h-[400px] rounded-2xl mx-1">
+      <div className="bg-[#180707] text-white border !border-[#FFDE00] flex flex-col xsm:w-[80%] sm:w-[70%] md:w-[400px] min-h-[400px] rounded-2xl mx-1">
         <div className="flex justify-between items-center py-4 px-3">
           <FontAwesomeIcon
             icon={faX}

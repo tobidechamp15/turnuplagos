@@ -232,33 +232,40 @@ export const deleteEvent = async (eventId) => {
     return { success: false, error: error.message };
   }
 };
-export const deleteBanner = async (bannerId) => {
+export const replaceBanner = async (bannerIds) => {
   try {
-    // Reference to the specific event document
-    const bannerDocRef = doc(db, "banner", bannerId);
-    const upBannerDocRef = doc(db, "updateBanner", bannerId);
+    if (bannerIds.length % 2 !== 0) {
+      throw new Error(
+        "The number of banner IDs should be even to swap them in pairs."
+      );
+    }
 
-    // Delete the document
-    await deleteDoc(bannerDocRef, upBannerDocRef);
-    alert("Banner Successfully deleted");
-    window.location.reload();
+    for (let i = 0; i < bannerIds.length; i += 2) {
+      const firstBannerId = bannerIds[i];
+      const secondBannerId = bannerIds[i + 1];
+
+      const firstBannerDocRef = doc(db, "banner", firstBannerId);
+      const secondBannerDocRef = doc(db, "banner", secondBannerId);
+
+      // Get the data of both banners
+      const firstBannerSnapshot = await getDoc(firstBannerDocRef);
+      const secondBannerSnapshot = await getDoc(secondBannerDocRef);
+
+      if (!firstBannerSnapshot.exists() || !secondBannerSnapshot.exists()) {
+        throw new Error("One or more banners do not exist.");
+      }
+
+      const firstBannerData = firstBannerSnapshot.data();
+      const secondBannerData = secondBannerSnapshot.data();
+
+      // Swap the banner data
+      await updateDoc(firstBannerDocRef, secondBannerData);
+      await updateDoc(secondBannerDocRef, firstBannerData);
+    }
+
     return { success: true };
   } catch (error) {
-    console.error("Error deleting event:", error);
-    return { success: false, error: error.message };
-  }
-};
-
-export const replaceBanner = async (bannerId, newBannerData) => {
-  try {
-    const bannerDocRef = doc(db, "banner", bannerId);
-
-    // Update the banner document with new data
-    await updateDoc(bannerDocRef, newBannerData);
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error replacing banner:", error);
+    console.error("Error replacing banners:", error);
     return { success: false, error: error.message };
   }
 };

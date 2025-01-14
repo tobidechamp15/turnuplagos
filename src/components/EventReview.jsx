@@ -90,7 +90,7 @@ const EventReview = () => {
           email, // Make sure email is added here
           uploadedAt: new Date(), // Add a timestamp
         });
-        setUserVerified(false); // Reset the verification status
+        // setUserVerified(false); // Reset the verification status
         alert("Event details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
         navigate("/home"); // Redirect to the home page
@@ -123,7 +123,9 @@ const EventReview = () => {
         if (existingUser.verificationStatus) {
           console.log("User email already verified!");
           alert("Your email is already verified.");
-          window.location.reload(); // Reload the page to reflect the changes
+          setEmailReg(false);
+          setUserVerified(true);
+          // window.location.reload(); // Reload the page to reflect the changes
 
           return; // Don't send another verification email if already verified
         } else {

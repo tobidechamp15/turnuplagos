@@ -101,14 +101,14 @@ const ViewEvent = () => {
                 setEditEventActive={setEditEventActive}
               />
             )}
-            {editTicketActive && (
-              <EditTicket
-                ticketInfo={event.ticketInfo}
-                id={id}
-                setEditTicketActive={setEditTicketActive}
-              />
-            )}
           </div>
+          {editTicketActive && (
+            <EditTicket
+              ticketInfo={event.ticketInfo}
+              id={id}
+              setEditTicketActive={setEditTicketActive}
+            />
+          )}
         </section>
       )}
       {deleteConfirmation && (

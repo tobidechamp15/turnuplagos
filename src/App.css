@@ -445,6 +445,81 @@ body {
 hr {
   border: 1px solid #909193;
 }
+.text-head {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+
+  color: #000000;
+}
+.text-mot {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: rgba(0, 0, 0, 0.7);
+}
+.cus-label {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: rgba(0, 0, 0, 0.7);
+}
+.cus-input {
+  background-color: #ecf1f4;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  color: #000000;
+} /* ResetPasswordMessage.css */
+.message-container {
+  text-align: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 450px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-container h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.message-container p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.message-container a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.message-container a:hover {
+  text-decoration: underline;
+}
+
 /*media screen from 783 to 1100*/
 @media screen and (min-width: 768px) and (max-width: 930px) {
   .custom-layout {
