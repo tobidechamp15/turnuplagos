@@ -21,14 +21,17 @@ import {
 import { db } from "./firebase/config";
 import { useEffect } from "react";
 import { faInfo } from "@fortawesome/free-solid-svg-icons/faInfo";
+import { useNavigate } from "react-router-dom";
 
 const PromoteBanner = () => {
   const [imagePreview, setImagePreview] = useState(uploadImg);
   const [socialMediaLinks, setSocialMediaLinks] = useState({ link: "" });
   const [email, setEmail] = useState(""); // To track the email input for free ticket registration
+  const [name, setName] = useState(""); // To track the email input for free ticket registration
   const [emailReg, setEmailReg] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false); // Track if the verification email is sent
   const [userVerified, setUserVerified] = useState(false); // Track if the user email is verified
+
   useEffect(() => {
     // Monitor user's authentication state and email verification status
     const auth = getAuth();
@@ -45,7 +48,7 @@ const PromoteBanner = () => {
 
     return () => unsubscribe(); // Cleanup listener on component unmount
   }, [email]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const updateUserVerificationStatus = async (user) => {
     const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
 
@@ -116,7 +119,8 @@ const PromoteBanner = () => {
         if (existingUser.verificationStatus) {
           console.log("User email already verified!");
           alert("Your email is already verified.");
-          window.location.reload(); // Reload the page to reflect the changes
+          setEmailReg(false);
+          setUserVerified(true);
           const localBanner = localStorage.getItem("bannerForm");
           console.log(localBanner);
           return; // Don't send another verification email if already verified
@@ -189,6 +193,7 @@ const PromoteBanner = () => {
   };
   const handleUpload = async () => {
     const formData = {
+      name,
       socialMediaLinks,
       imagePreview,
       status: "pending",
@@ -208,7 +213,7 @@ const PromoteBanner = () => {
         setUserVerified(false); // Reset the verification status
         alert("Banner details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
-        // navigate("/home"); // Redirect to the home page
+        navigate("/home"); // Redirect to the home page
       } catch (error) {
         console.error("Error uploading event details:", error);
       }
@@ -280,19 +285,35 @@ const PromoteBanner = () => {
           <FontAwesomeIcon icon={faInfo} /> Click current Image to change image
         </span>
       </div>
-      <div className="mt-4 md:!w-[70vw] xsm:w-full">
-        <label htmlFor="link" className="block mb-2">
-          Business Link (optional)
-        </label>
-        <input
-          type="text"
-          id="link"
-          name="link"
-          value={socialMediaLinks.link}
-          onChange={handleSocialMediaChange}
-          placeholder="Enter your business link"
-          className="w-full p-2 rounded-lg bg-transparent border text-white"
-        />
+      <div className="flex flex-col gap-2">
+        <div className="mt-4 md:!w-[70vw] xsm:w-full">
+          <label htmlFor="link" className="block mb-2">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter name"
+            className="w-full p-2 rounded-lg bg-transparent border text-white"
+          />
+        </div>
+        <div className="mt-4 md:!w-[70vw] xsm:w-full">
+          <label htmlFor="link" className="block mb-2">
+            Business Link (optional)
+          </label>
+          <input
+            type="text"
+            id="link"
+            name="link"
+            value={socialMediaLinks.link}
+            onChange={handleSocialMediaChange}
+            placeholder="Enter your business link"
+            className="w-full p-2 rounded-lg bg-transparent border text-white"
+          />
+        </div>
       </div>
       <section className="w-full flex xsm:flex-col gap-4 items-center my-3 justify-center">
         {!userVerified && (

@@ -1,10 +1,10 @@
 import React from "react";
 import { deleteBanner } from "../../utils/deleteBanner";
 
-const ConfirmDeleteBanner = ({ setDeleteConfirmation, id }) => {
+const ConfirmDeleteBanner = ({ setDeleteConfirmation, banner }) => {
   const handleDeleteBanner = async (id) => {
     console.log(id);
-    const response = await deleteBanner(id);
+    const response = await deleteBanner(banner);
 
     if (response.success) {
       setDeleteConfirmation(false);
@@ -30,7 +30,7 @@ const ConfirmDeleteBanner = ({ setDeleteConfirmation, id }) => {
         </button>
         <button
           className="btn btn-danger"
-          onClick={() => handleDeleteBanner(id)}
+          onClick={() => handleDeleteBanner(banner)}
         >
           {" "}
           Yes, Delete

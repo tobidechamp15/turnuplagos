@@ -15,6 +15,8 @@ const ManageEvent = () => {
     try {
       const response = await fetchEvents();
       if (response.success) {
+        console.log("object");
+        console.log(response.events, "events");
         setEvents(response.events || []);
       } else {
         console.error("Failed to fetch events:", response.error);
@@ -52,51 +54,57 @@ const ManageEvent = () => {
     <div>
       <div className="pending-section">
         <span className="text-[#4A5154]">Pending</span>
-        {currentEvents.map((event, index) => (
-          <div
-            key={index}
-            className="flex flex-col gap-6 w-full items-start mb-4"
-          >
-            <section className="flex flex-col md:flex-row gap-4 items-start justify-center">
-              <span className="w-[402px] xs:w-full">
-                <img
-                  src={event.eventMarket.imagePreview}
-                  className="w-full rounded-xl border border-white"
-                  alt={event.title}
-                />
-              </span>
-              <div className="flex flex-col gap-3 xsm:w-full event-details">
-                <span className="text-xl font-bold">
-                  {event.eventFormData.name}
-                </span>
-                <p>{event.eventFormData.description}</p>
-                <span className="text-lg font-semibold">Details</span>
-                <ul className="list-disc pl-5">
-                  <li>Venue: {event.eventFormData.venue}</li>
-                  <li>Date: {event.eventFormData.date}</li>
-                  <li>Start Time: {event.eventFormData.start_time}</li>
-                  <li>End Time: {event.eventFormData.end_time}</li>
-                  <li>Dress Code: {event.eventFormData.dress_code}</li>
-                </ul>
-                <span className="text-lg font-semibold">Tickets</span>
-                <ul className="list-disc pl-5">
-                  <li>Tickets: {event.ticketInfo.ticketType}</li>
-                  {event.ticketInfo.categories.map((category, idx) => (
-                    <li key={idx}>
-                      {category.name}: {category.price}
-                    </li>
-                  ))}
-                </ul>
+        {events.length > 0 ? (
+          currentEvents
+            .filter((event) => event.status === "uploaded")
+            .map((event, index) => (
+              <div
+                key={index}
+                className="flex flex-col gap-6 w-full items-start mb-4"
+              >
+                <section className="flex flex-col md:flex-row gap-4 items-start justify-center">
+                  <span className="w-[402px] xs:w-full">
+                    <img
+                      src={event.eventMarket.imagePreview}
+                      className="w-full rounded-xl border border-white"
+                      alt={event.eventFormData.name}
+                    />
+                  </span>
+                  <div className="flex flex-col gap-3 xsm:w-full event-details">
+                    <span className="text-xl font-bold">
+                      {event.eventFormData.name}
+                    </span>
+                    <p>{event.eventFormData.description}</p>
+                    <span className="text-lg font-semibold">Details</span>
+                    <ul className="list-disc pl-5">
+                      <li>Venue: {event.eventFormData.venue}</li>
+                      <li>Date: {event.eventFormData.date}</li>
+                      <li>Start Time: {event.eventFormData.start_time}</li>
+                      <li>End Time: {event.eventFormData.end_time}</li>
+                      <li>Dress Code: {event.eventFormData.dress_code}</li>
+                    </ul>
+                    <span className="text-lg font-semibold">Tickets</span>
+                    <ul className="list-disc pl-5">
+                      <li>Tickets: {event.ticketInfo.ticketType}</li>
+                      {event.ticketInfo.categories.map((category, idx) => (
+                        <li key={idx}>
+                          {category.name}: {category.price}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </section>
+                <Link
+                  to={`/dashboard/manage-event/${event.id}`}
+                  className="btn btn-light w-full"
+                >
+                  View Event
+                </Link>
               </div>
-            </section>
-            <Link
-              to={`/dashboard/manage-event/${event.id}`}
-              className="btn btn-light w-full"
-            >
-              View Event
-            </Link>
-          </div>
-        ))}
+            ))
+        ) : (
+          <p>No Events available..</p>
+        )}
       </div>
 
       {/* Pagination */}

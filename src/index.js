@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-// import SideBar from "./components/SideBar";
+
 import App from "./App";
 import Home from "./components/Home";
 import About from "./components/About";

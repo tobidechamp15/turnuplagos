@@ -15,7 +15,9 @@ const AllBeyondLagos = () => {
         //find events with eventMarket.eventFormData.state is not "Lagos"
 
         const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state !== "Lagos"
+          (event) =>
+            event.status === "uploaded" &&
+            event.eventFormData.state === "Beyond Lagos"
         );
         console.log(featuredEvents);
         setEvents(featuredEvents || []);

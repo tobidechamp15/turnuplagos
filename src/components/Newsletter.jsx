@@ -5,7 +5,9 @@ const Newsletter = () => {
   return (
     <div className="flex flex-col md:flex-row items-center justify-center my-7">
       <section className="flex flex-col  h-full md:p-4 gap-4 justify-between items-start">
-        <span className="text-2xl">Stay Informed with Our Newsletter</span>
+        <span className="text-2xl text-white">
+          Stay Informed with Our Newsletter
+        </span>
         <span className="text-[#FFFFFFB2]">
           Subscribe to receive the latest updates, event news, and exclusive
           offers.

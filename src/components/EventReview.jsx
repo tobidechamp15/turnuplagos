@@ -21,19 +21,6 @@ const EventReview = () => {
   const [userVerified, setUserVerified] = useState(false); // Track if the user email is verified
 
   const navigate = useNavigate();
-  const event = {
-    id: 4,
-    image: eventFlyer,
-    date: "20 May, 2024",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum.",
-    ticket: "#5000",
-    venue: "Tribe Lagos",
-    time: "12:00 PM - 3:00 PM",
-    title: "GAMES NIGHT",
-    startTime: "7:00 PM",
-    endTime: "1:00 AM",
-  };
 
   useEffect(() => {
     const eventMarket = JSON.parse(localStorage.getItem("eventMarket") || "{}");
@@ -222,7 +209,7 @@ const EventReview = () => {
           <span className="w-[402px] xs:w-full">
             <img
               src={eventDetails.eventMarket.imagePreview || eventFlyer}
-              alt={`${event.title} Flyer`}
+              alt={`${eventDetails.eventFormData.name} Flyer`}
               className="w-full rounded-xl border border-white"
             />
           </span>

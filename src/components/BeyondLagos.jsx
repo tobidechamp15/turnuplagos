@@ -15,11 +15,16 @@ const BeyondLagos = () => {
         console.log(response.events);
         //find events with eventMarket.eventFormData.state is not "Lagos"
 
-        const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state !== "Lagos"
-        );
-        console.log(featuredEvents);
-        setEvents(featuredEvents || []);
+        if (events) {
+          const featuredEvents = response.events.filter(
+            (event) =>
+              event.status === "uploaded" &&
+              event.eventFormData.state === "Beyond Lagos"
+          );
+          setEvents(featuredEvents || []);
+          console.log(featuredEvents);
+          return events;
+        }
       } else {
         console.error("Failed to fetch events:", response.error);
       }
@@ -45,7 +50,7 @@ const BeyondLagos = () => {
 
       {/* Event Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {events.slice(0, 4).map((event) => (
+        {events?.slice(0, 4).map((event) => (
           <div
             key={event.id}
             className="flex flex-col gap-3 md:flex-row rounded-lg shadow-md overflow-hidden"

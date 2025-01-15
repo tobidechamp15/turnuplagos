@@ -49,7 +49,7 @@ const SideBar = ({ onClose }) => {
           className="btn btn-outline-light w-full"
           onClick={handlePromoteEvent}
         >
-          Promote an Event
+          Promote With us
         </button>
       </div>
     </div>

@@ -1,4 +1,9 @@
-import { deleteDoc, updateDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import {
   addDoc,
@@ -9,6 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../components/firebase/config";
+import { getAuth } from "firebase/auth";
 
 export const fetchEvents = async () => {
   try {
@@ -28,6 +34,7 @@ export const fetchEvents = async () => {
     return { success: false, error: error.message };
   }
 };
+
 export const fetchBanner = async () => {
   try {
     const bannerRef = collection(db, "banner");
@@ -171,6 +178,8 @@ const createTickets = async (eventId, purchaseDetails, userEmail) => {
 export default createTickets;
 
 export const updateEvent = async (eventId, updatedData) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
   try {
     if (!eventId) {
       throw new Error("Event ID is missing");
@@ -193,6 +202,13 @@ export const updateEvent = async (eventId, updatedData) => {
     // Update the Firestore document with the new eventFormData
     await updateDoc(eventDocRef, dataToUpdate);
 
+    await addDoc(collection(db, "notifications"), {
+      action: "Event Information Edited",
+      eventId,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
     return { success: true };
   } catch (error) {
     console.error("Error updating event:", error);
@@ -201,6 +217,8 @@ export const updateEvent = async (eventId, updatedData) => {
 };
 
 export const updateTicket = async (updatedTicket, id) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
   try {
     const ticketDocRef = doc(db, "events", id); // Assuming ticket has an ID field
 
@@ -211,6 +229,14 @@ export const updateTicket = async (updatedTicket, id) => {
     };
     await updateDoc(ticketDocRef, dataToUpdate);
 
+    await addDoc(collection(db, "notifications"), {
+      action: "Ticket Information Edited",
+      id,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
+
     return { success: true, dataToUpdate };
   } catch (error) {
     console.error("Error updating ticket:", error);
@@ -218,13 +244,30 @@ export const updateTicket = async (updatedTicket, id) => {
   }
 };
 
-export const deleteEvent = async (eventId) => {
+export const deleteEvent = async (event) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
+
   try {
     // Reference to the specific event document
-    const eventDocRef = doc(db, "events", eventId);
+    const eventDocRef = doc(db, "events", event.id);
 
     // Delete the document
     await deleteDoc(eventDocRef);
+
+    await setDoc(eventDocRef, {
+      ...event,
+      status: "deleted",
+      uploadedAt: new Date(),
+    });
+
+    await addDoc(collection(db, "notifications"), {
+      action: "Event Rejected",
+      eventId: event.id,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
 
     return { success: true };
   } catch (error) {
@@ -232,6 +275,43 @@ export const deleteEvent = async (eventId) => {
     return { success: false, error: error.message };
   }
 };
+export const deleteBanner = async (bannerData) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
+
+  try {
+    if (!bannerData.id) {
+      throw new Error("Banner ID is required to upload the banner.");
+    }
+    // Reference to the specific event document
+    const bannerDocRef = doc(db, "banner", bannerData.id);
+
+    // Delete the document
+    await setDoc(bannerDocRef, {
+      ...bannerData,
+      status: "deleted",
+      uploadedAt: new Date(),
+    });
+
+    alert("Banner Successfully deleted");
+
+    // Create a notification record for the event fetch
+    await addDoc(collection(db, "notifications"), {
+      action: "Banner Deleted",
+      bannerId: bannerData.id,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
+
+    window.location.reload();
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return { success: false, error: error.message };
+  }
+};
+
 export const replaceBanner = async (bannerIds) => {
   try {
     if (bannerIds.length % 2 !== 0) {

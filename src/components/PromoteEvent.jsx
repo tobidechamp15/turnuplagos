@@ -173,7 +173,7 @@ const PromoteEvent = () => {
               value={formData.dress_code}
               onChange={handleChange}
               placeholder="Is there a specific dress code? If yes, provide details."
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
         </div>

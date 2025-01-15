@@ -22,7 +22,7 @@ const ViewEvent = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const handleDeleteEvent = async () => {
-    const result = await deleteEvent(id);
+    const result = await deleteEvent(event);
 
     if (result.success) {
       console.log("Event deleted successfully!");
@@ -68,7 +68,7 @@ const ViewEvent = () => {
             <img
               src={event.eventMarket.imagePreview}
               className="w-full rounded-xl border border-white"
-              alt={event.title}
+              alt={event.eventFormData.name}
             />
           </span>
           <div className="flex flex-col gap-3  xsm:w-full event-details">

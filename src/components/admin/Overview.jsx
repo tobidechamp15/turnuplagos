@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  deleteBanner,
   deleteEvent,
   fetchBanner,
   fetchEvents,
@@ -26,6 +27,7 @@ const Overview = () => {
     try {
       const response = await fetchBanner();
       if (response.success) {
+        console.log(response, "response");
         setBanner(response.banner || []);
       } else {
         setErrorMessage("Failed to fetch banners.");
@@ -41,6 +43,7 @@ const Overview = () => {
     try {
       const response = await fetchEvents();
       if (response.success) {
+        console.log(response);
         setEvents(response.events || []);
       } else {
         console.error("Failed to fetch events:", response.error);
@@ -89,7 +92,19 @@ const Overview = () => {
       alert("Failed to delete event:");
     }
   };
+
+  const handleDeleteBanner = async (id) => {
+    const result = await deleteBanner(id);
+    if (result.success) {
+      console.log("Banner deleted successfully!");
+      window.location.reload();
+    } else {
+      alert("Failed to delete banner:");
+    }
+  };
+
   if (isLoading) return <AdminLoader />;
+
   return (
     <div>
       <div className="pending-section">
@@ -104,7 +119,7 @@ const Overview = () => {
                 className="flex flex-col w-full justify-between items-center gap-2 border p-4 rounded-md shadow-sm mb-4"
               >
                 <div className="flex justify-between w-full">
-                  <span>Banner {index + 1}</span>
+                  <span> {bannerItem.name} Banner</span>
 
                   <div className="flex gap-2">
                     <FontAwesomeIcon
@@ -115,7 +130,10 @@ const Overview = () => {
                   </div>
                 </div>
                 <section className="flex gap-3 w-full xsm:flex-col">
-                  <button className="btn btn-outline-danger w-full ">
+                  <button
+                    className="btn btn-outline-danger w-full "
+                    onClick={() => handleDeleteBanner(bannerItem)}
+                  >
                     Reject Banner
                   </button>
                   <button
@@ -150,10 +168,7 @@ const Overview = () => {
           </div>
         )}
         {currentEvents
-          .filter(
-            (bannerItem) =>
-              !bannerItem.status || bannerItem.status !== "uploaded"
-          ) // Filter where status doesn't exist or is not 'uploaded'
+          .filter((bannerItem) => bannerItem.status === "pending") // Filter where status doesn't exist or is not 'uploaded'
           .map((event, index) => (
             <div
               key={index}
@@ -162,9 +177,9 @@ const Overview = () => {
               <section className="flex flex-col md:flex-row gap-4 items-start justify-center">
                 <span className="w-[402px] xs:w-full">
                   <img
-                    src={event.eventMarket.imagePreview}
+                    src={event?.eventMarket.imagePreview}
                     className="w-full rounded-xl border border-white"
-                    alt={event.title}
+                    alt={event.eventFormData.name}
                   />
                 </span>
                 <div className="flex flex-col gap-3 xsm:w-full event-details">
@@ -194,7 +209,7 @@ const Overview = () => {
               <section className="flex gap-3 w-full xsm:flex-col">
                 <button
                   className="btn btn-outline-danger w-full "
-                  onClick={() => handleDeleteEvent(event.id)}
+                  onClick={() => handleDeleteEvent(event)}
                 >
                   Reject Event
                 </button>

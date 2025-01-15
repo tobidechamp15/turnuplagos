@@ -1,5 +1,5 @@
 import { getAuth, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../components/firebase/config";
 
@@ -72,7 +72,12 @@ export const editProfile = async (userData) => {
     // Update Firestore document for additional user data
     const userDocRef = doc(db, "admins", user.uid);
     await setDoc(userDocRef, updatedData, { merge: true });
-
+    await addDoc(collection(db, "notifications"), {
+      action: "User Profile Edited",
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
     return { success: true, message: "Profile updated successfully" };
   } catch (error) {
     console.error("Error updating profile:", error);
