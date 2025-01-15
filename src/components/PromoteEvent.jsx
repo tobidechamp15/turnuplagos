@@ -31,7 +31,7 @@ const PromoteEvent = () => {
   };
 
   return (
-    <div className="container-md mt-[48px] p-0">
+    <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#FFDE00]">Information</span>
       </span>
@@ -48,11 +48,11 @@ const PromoteEvent = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="What's the name of the event?"
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
-            <label htmlFor="description">
+            <label htmlFor="description" className="text-white">
               Event Description <span className="required">*</span>
             </label>
             <input
@@ -62,7 +62,7 @@ const PromoteEvent = () => {
               value={formData.description}
               onChange={handleChange}
               placeholder="Provide a brief, engaging description of your event"
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
         </div>
@@ -71,7 +71,31 @@ const PromoteEvent = () => {
             <label htmlFor="state" className="text-white">
               State <span className="required">*</span>
             </label>
-            <input
+            <select
+              name="state"
+              id=""
+              value={formData.state}
+              required
+              onChange={handleChange}
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
+            >
+              <option value="" className="text-black bg-transparent">
+                Select a state
+              </option>
+              <option
+                value="Within Lagos"
+                className="text-black bg-transparent"
+              >
+                Within Lagos
+              </option>
+              <option
+                value="Beyond Lagos"
+                className="text-black bg-transparent"
+              >
+                Beyond Lagos
+              </option>
+            </select>
+            {/* <input
               type="text"
               name="state"
               required
@@ -79,10 +103,10 @@ const PromoteEvent = () => {
               onChange={handleChange}
               placeholder="Which state is the event happening?"
               className="w-full p-2 rounded-lg bg-transparent border"
-            />
+            /> */}
           </div>
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
-            <label htmlFor="venue">
+            <label htmlFor="venue" className="text-white">
               Venue <span className="required">*</span>
             </label>
             <input
@@ -92,7 +116,7 @@ const PromoteEvent = () => {
               value={formData.venue}
               onChange={handleChange}
               placeholder="Where is the event happening?"
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
         </div>
@@ -107,11 +131,11 @@ const PromoteEvent = () => {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white form-control"
             />
           </div>
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
-            <label htmlFor="start_time">
+            <label htmlFor="start_time" className="text-white">
               Start Time <span className="required">*</span>
             </label>
             <input
@@ -120,7 +144,7 @@ const PromoteEvent = () => {
               required
               value={formData.start_time}
               onChange={handleChange}
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
         </div>
@@ -135,11 +159,11 @@ const PromoteEvent = () => {
               name="end_time"
               value={formData.end_time}
               onChange={handleChange}
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
-            <label htmlFor="dress_code">
+            <label htmlFor="dress_code" className="text-white">
               Dress Code <span className="required">*</span>
             </label>
             <input
@@ -149,7 +173,7 @@ const PromoteEvent = () => {
               value={formData.dress_code}
               onChange={handleChange}
               placeholder="Is there a specific dress code? If yes, provide details."
-              className="w-full p-2 rounded-lg bg-transparent border"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
         </div>
@@ -164,7 +188,7 @@ const PromoteEvent = () => {
             required
             onChange={handleChange}
             placeholder="What is the number of people that the venue can contain?"
-            className="w-full p-2 rounded-lg bg-transparent border"
+            className="w-full p-2 rounded-lg bg-transparent border text-white"
           />
         </div>
         <button type="submit" className="btn btn-light my-2 xsm:w-fit">

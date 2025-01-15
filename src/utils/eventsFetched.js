@@ -1,4 +1,9 @@
-import { updateDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import {
   addDoc,
@@ -9,6 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../components/firebase/config";
+import { getAuth } from "firebase/auth";
 
 export const fetchEvents = async () => {
   try {
@@ -23,6 +29,25 @@ export const fetchEvents = async () => {
 
     console.log(events);
     return { success: true, events };
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const fetchBanner = async () => {
+  try {
+    const bannerRef = collection(db, "banner");
+    const bannerQuery = query(bannerRef, orderBy("uploadedAt", "desc")); // Order events by uploadedAt
+    const querySnapshot = await getDocs(bannerQuery);
+
+    const banner = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    console.log(banner, "banner");
+    return { success: true, banner };
   } catch (error) {
     console.error("Error fetching events:", error);
     return { success: false, error: error.message };
@@ -151,3 +176,176 @@ const createTickets = async (eventId, purchaseDetails, userEmail) => {
 };
 
 export default createTickets;
+
+export const updateEvent = async (eventId, updatedData) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
+  try {
+    if (!eventId) {
+      throw new Error("Event ID is missing");
+    }
+
+    // Reference to the specific event document
+    const eventDocRef = doc(db, "events", eventId);
+
+    // Prepare the data to update under eventFormData
+    const dataToUpdate = {
+      eventFormData: {
+        ...updatedData, // Spread the updated data into eventFormData
+      },
+    };
+
+    // Log the eventId and dataToUpdate for debugging
+    console.log("Updating event with ID:", eventId);
+    console.log("Data to update:", dataToUpdate);
+
+    // Update the Firestore document with the new eventFormData
+    await updateDoc(eventDocRef, dataToUpdate);
+
+    await addDoc(collection(db, "notifications"), {
+      action: "Event Information Edited",
+      eventId,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating event:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const updateTicket = async (updatedTicket, id) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
+  try {
+    const ticketDocRef = doc(db, "events", id); // Assuming ticket has an ID field
+
+    const dataToUpdate = {
+      ticketInfo: {
+        ...updatedTicket, // Spread the updated data into eventFormData
+      },
+    };
+    await updateDoc(ticketDocRef, dataToUpdate);
+
+    await addDoc(collection(db, "notifications"), {
+      action: "Ticket Information Edited",
+      id,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
+
+    return { success: true, dataToUpdate };
+  } catch (error) {
+    console.error("Error updating ticket:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const deleteEvent = async (event) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
+
+  try {
+    // Reference to the specific event document
+    const eventDocRef = doc(db, "events", event.id);
+
+    // Delete the document
+    await deleteDoc(eventDocRef);
+
+    await setDoc(eventDocRef, {
+      ...event,
+      status: "deleted",
+      uploadedAt: new Date(),
+    });
+
+    await addDoc(collection(db, "notifications"), {
+      action: "Event Rejected",
+      eventId: event.id,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return { success: false, error: error.message };
+  }
+};
+export const deleteBanner = async (bannerData) => {
+  const auth = getAuth();
+  const user = auth.currentUser; // Get the logged-in user
+
+  try {
+    if (!bannerData.id) {
+      throw new Error("Banner ID is required to upload the banner.");
+    }
+    // Reference to the specific event document
+    const bannerDocRef = doc(db, "banner", bannerData.id);
+
+    // Delete the document
+    await setDoc(bannerDocRef, {
+      ...bannerData,
+      status: "deleted",
+      uploadedAt: new Date(),
+    });
+
+    alert("Banner Successfully deleted");
+
+    // Create a notification record for the event fetch
+    await addDoc(collection(db, "notifications"), {
+      action: "Banner Deleted",
+      bannerId: bannerData.id,
+      timestamp: serverTimestamp(),
+      userId: user ? user.uid : "unknown",
+      status: "success",
+    });
+
+    window.location.reload();
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const replaceBanner = async (bannerIds) => {
+  try {
+    if (bannerIds.length % 2 !== 0) {
+      throw new Error(
+        "The number of banner IDs should be even to swap them in pairs."
+      );
+    }
+
+    for (let i = 0; i < bannerIds.length; i += 2) {
+      const firstBannerId = bannerIds[i];
+      const secondBannerId = bannerIds[i + 1];
+
+      const firstBannerDocRef = doc(db, "banner", firstBannerId);
+      const secondBannerDocRef = doc(db, "banner", secondBannerId);
+
+      // Get the data of both banners
+      const firstBannerSnapshot = await getDoc(firstBannerDocRef);
+      const secondBannerSnapshot = await getDoc(secondBannerDocRef);
+
+      if (!firstBannerSnapshot.exists() || !secondBannerSnapshot.exists()) {
+        throw new Error("One or more banners do not exist.");
+      }
+
+      const firstBannerData = firstBannerSnapshot.data();
+      const secondBannerData = secondBannerSnapshot.data();
+
+      // Swap the banner data
+      await updateDoc(firstBannerDocRef, secondBannerData);
+      await updateDoc(secondBannerDocRef, firstBannerData);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error replacing banners:", error);
+    return { success: false, error: error.message };
+  }
+};

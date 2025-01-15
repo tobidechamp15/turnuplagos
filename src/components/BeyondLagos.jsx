@@ -7,31 +7,28 @@ const BeyondLagos = () => {
   const [events, setEvents] = useState([]);
   const [openTicket, setOpenTicket] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
-
-  const handleFetchEvents = async () => {
-    try {
-      const response = await fetchEvents();
-      if (response.success) {
-        console.log(response.events);
-        //find events with eventMarket.eventFormData.state is not "Lagos"
-
-        const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state !== "Lagos"
-        );
-        console.log(featuredEvents);
-        setEvents(featuredEvents || []);
-      } else {
-        console.error("Failed to fetch events:", response.error);
-      }
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    }
-  };
-
-  // Adjust itemsPerPage based on screen size
   useEffect(() => {
-    handleFetchEvents();
-  }, []);
+    const fetchEventsData = async () => {
+      try {
+        const response = await fetchEvents();
+        if (response.success) {
+          const featuredEvents = response.events.filter(
+            (event) =>
+              event.status === "uploaded" &&
+              event.eventFormData.state === "Beyond Lagos"
+          );
+          setEvents(featuredEvents || []);
+          console.log(featuredEvents);
+        } else {
+          console.error("Failed to fetch events:", response.error);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEventsData();
+  }, []); // No dependencies since everything is contained within the effect
   const handleTicketSale = (id) => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
@@ -45,7 +42,7 @@ const BeyondLagos = () => {
 
       {/* Event Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {events.slice(0, 4).map((event) => (
+        {events?.slice(0, 4).map((event) => (
           <div
             key={event.id}
             className="flex flex-col gap-3 md:flex-row rounded-lg shadow-md overflow-hidden"

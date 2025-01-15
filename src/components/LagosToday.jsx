@@ -16,7 +16,9 @@ const LagosToday = () => {
         //find events with eventMarket.eventFormData.state === "Lagos"
 
         const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state === "Lagos"
+          (event) =>
+            event.status === "uploaded" &&
+            event.eventFormData.state === "Within Lagos"
         );
         console.log(featuredEvents);
         setEvents(featuredEvents || []);
