@@ -53,7 +53,7 @@ const ManageEvent = () => {
   return (
     <div>
       <div className="pending-section">
-        <span className="text-[#4A5154]">Pending</span>
+        <span className="text-[#4A5154]">Events</span>
         {events.length > 0 ? (
           currentEvents
             .filter((event) => event.status === "uploaded")

@@ -39,7 +39,7 @@ const Signup = () => {
 
     try {
       // Restrict to specific domain
-      if (!email.endsWith("@turnup.com")) {
+      if (!email.endsWith("@turnuplagos.com")) {
         setError("Provided email is not a required admin email");
         setIsLoading(false);
         return;
