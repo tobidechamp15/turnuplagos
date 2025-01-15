@@ -58,7 +58,7 @@ const ViewEvent = () => {
         <Link to="/dashboard/manage-event">
           <FontAwesomeIcon icon={faArrowLeft} />
         </Link>
-        <span className="xsm:!text-[16px] text-[32px] ">Event</span>
+        <span className="xsm:!text-[16px] text-[16px] ">Event</span>
         <span></span>
       </div>
 
