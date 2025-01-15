@@ -10,6 +10,11 @@ import { faEye, faX } from "@fortawesome/free-solid-svg-icons";
 import { uploadNewBanner, uploadNewEvent } from "../../utils/upload";
 import AdminLoader from "./AdminLoader";
 
+import card1 from "../../assets/card1.svg";
+import card2 from "../../assets/card2.svg";
+import card3 from "../../assets/card3.svg";
+import card4 from "../../assets/card4.svg";
+
 const Overview = () => {
   // Fetch events
   const [banner, setBanner] = useState([]);
@@ -108,8 +113,14 @@ const Overview = () => {
   return (
     <div>
       <div className="pending-section">
-        <span className="text-[#4A5154]">Pending</span>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        <section className="flex xsm:flex-col w-full gap-3 flex-wrap">
+          <img src={card1} alt="" className="" />
+          <img src={card2} alt="" />
+          <img src={card3} alt="" />
+          <img src={card4} alt="" />
+        </section>
+        <span className="text-[#4A5154]">Pending</span>
         {banner.length > 0 ? (
           banner
             .filter((bannerItem) => bannerItem.status === "pending") // Filter pending banners

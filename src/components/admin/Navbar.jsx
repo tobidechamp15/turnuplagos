@@ -60,7 +60,7 @@ const Navbar = ({ toggleSidebar }) => {
     <nav className="bg-black p-[24px] nav-bg flex justify-between items-center">
       <div>Hello {admin?.firstName} 👋 </div>
       <div className="flex gap-2 items-center xsm:hidden ">
-        <img src={user?.photoURL} alt="avatar" className="w-11" />
+        <img src={admin?.photoURL} alt="avatar" className="w-11" />
         <div className="flex flex-col gap-1">
           <span className="text-[14px]">
             {admin?.lastName} {admin?.firstName}
