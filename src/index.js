@@ -30,6 +30,7 @@ import Signup from "./components/admin/Signup.jsx";
 import ForgotPassword from "./components/admin/ForgotPassword.jsx";
 import ResetPasswordMessage from "./components/admin/ResetMessage.jsx";
 import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
+import AdminUploadBanner from "./components/admin/AdminUploadBanner.jsx";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
         element: <ManageEvent />,
       },
       { path: "/dashboard/manage-event/:id", element: <ViewEvent /> }, // Nested route for ViewEvent
+      {
+        path: "/dashboard/admin-upload-banner",
+        element: <AdminUploadBanner />,
+      }, // Nested route for ViewEvent
 
       { path: "/dashboard/manage-banners", element: <ManageBanner /> },
       { path: "/dashboard/notification", element: <Notifications /> },

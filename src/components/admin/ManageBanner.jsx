@@ -79,7 +79,10 @@ const ManageBanner = () => {
       <div className="flex w-full items-center justify-between">
         <span className="text-[#4A5154] ">Banners</span>
         <section className="flex flex-col md:flex-row md:gap-4   my-2 w-fit">
-          <Link to="/promote-banner" className="btn btn-light w-fit">
+          <Link
+            to="/dashboard/admin-upload-banner"
+            className="btn btn-light w-fit"
+          >
             {" "}
             <FontAwesomeIcon icon={faUpload} /> Upload Banner
           </Link>

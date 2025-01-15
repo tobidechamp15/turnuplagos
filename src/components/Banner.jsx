@@ -52,26 +52,32 @@ const Banner = () => {
           //   width: `${banners.length * 100}%`,
         }}
       >
-        {banners?.map((banner) => (
-          <img
-            key={banner.id}
-            src={banner.imagePreview}
-            alt={`banner-${banner.id}`}
-            className="w-full xsm:!h-[100px] flex-shrink-0 object-contain"
-          />
-        ))}
+        {banners &&
+          banners
+            .filter((bannerItem) => bannerItem.status === "uploaded")
+            .map((banner) => (
+              <img
+                key={banner.id}
+                src={banner.imagePreview}
+                alt={`banner-${banner.id}`}
+                className="w-full xsm:!h-[100px] flex-shrink-0 object-contain"
+              />
+            ))}
       </div>
       {/* Optional Navigation Dots */}
       <div className=" flex space-x-2 items-center w-full justify-center my-2 transform -translate-x-1/">
-        {banners.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full  ${
-              currentIndex === index ? "bg-[#FFDE00]" : "bg-gray-600"
-            }`}
-          ></button>
-        ))}
+        {banners &&
+          banners
+            .filter((bannerItem) => bannerItem.status === "uploaded")
+            .map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-3 h-3 rounded-full  ${
+                  currentIndex === index ? "bg-[#FFDE00]" : "bg-gray-600"
+                }`}
+              ></button>
+            ))}
       </div>
     </div>
   );
