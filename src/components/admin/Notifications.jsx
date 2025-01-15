@@ -93,6 +93,8 @@ const Notifications = () => {
         <p>Error: {error}</p>
       ) : (
         <ul className="flex flex-col gap-3">
+          {" "}
+          <span className="text-[#4A5154] ">Notifications</span>
           {notifications.map((notification) => {
             const eventName = getEventNameById(
               notification.bannerId || notification.eventId

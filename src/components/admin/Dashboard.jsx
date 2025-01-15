@@ -7,7 +7,7 @@ import activeNotificationIcon from "../../assets/activeNotificationIcon.svg";
 import bannerIcon from "../../assets/bannerIcon.svg";
 import eventsIcon from "../../assets/eventsIcon.svg";
 import overviewIcon from "../../assets/overviewIcon.svg";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/blackLogo (2).svg";
 import notificationIcon from "../../assets/notificationIcon.svg";
 import Logout from "./Logout";
 import "../../App.css";
@@ -125,7 +125,7 @@ const Dashboard = () => {
             to="/"
             className="flex items-center my-6 gap-2 px-4 justify-center"
           >
-            <img src={logo} className="w-[36px]" alt="Logo" />
+            <img src={logo} className="w-[70px]" alt="Logo" />
           </Link>
 
           {/* Dropdown Menu */}
