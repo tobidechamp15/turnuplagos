@@ -29,7 +29,7 @@ const ForgotPassword = () => {
           <img src={logo} alt="logo" className="w-[150px]" />
         </NavLink>
         <div className="text-xl flex flex-col gap-3   w-full   ">
-          Reset Password
+          Forgot Password?
           <span className="text-sm text-gray-600">
             Enter your email address and we will send you the instructions for
             the password recovery
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
         </div>
         <form
           onSubmit={handleReset}
-          className="flex flex-col gap-4 text-black  items-center justify-center self-center w-100 "
+          className="flex flex-col gap-4 text-black  items-center justify-center self-center w-full md:w-2/3"
         >
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="email" className="cus-label">

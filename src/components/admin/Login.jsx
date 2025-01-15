@@ -57,7 +57,7 @@ const Login = () => {
           Here’s to another productive session!
         </span>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:w-2/3">
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className="cus-label">
               Email Address
