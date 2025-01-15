@@ -114,7 +114,7 @@ const Overview = () => {
     <div>
       <div className="pending-section">
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <section className="flex xsm:flex-col w-full gap-3 flex-wrap">
+        <section className="flex w-full gap-3  overflow-x-scroll">
           <img src={card1} alt="" className="" />
           <img src={card2} alt="" />
           <img src={card3} alt="" />
