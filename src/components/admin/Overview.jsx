@@ -112,14 +112,14 @@ const Overview = () => {
 
   return (
     <div>
+      <section className="flex w-full gap-3  overflow-x-scroll">
+        <img src={card1} alt="" className="" />
+        <img src={card2} alt="" />
+        <img src={card3} alt="" />
+        <img src={card4} alt="" />
+      </section>
       <div className="pending-section">
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <section className="flex w-full gap-3  overflow-x-scroll">
-          <img src={card1} alt="" className="" />
-          <img src={card2} alt="" />
-          <img src={card3} alt="" />
-          <img src={card4} alt="" />
-        </section>
         <span className="text-[#4A5154]">Pending</span>
         {banner.length > 0 ? (
           banner
