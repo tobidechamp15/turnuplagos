@@ -7,15 +7,11 @@ const BeyondLagos = () => {
   const [events, setEvents] = useState([]);
   const [openTicket, setOpenTicket] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
-
-  const handleFetchEvents = async () => {
-    try {
-      const response = await fetchEvents();
-      if (response.success) {
-        console.log(response.events);
-        //find events with eventMarket.eventFormData.state is not "Lagos"
-
-        if (events) {
+  useEffect(() => {
+    const fetchEventsData = async () => {
+      try {
+        const response = await fetchEvents();
+        if (response.success) {
           const featuredEvents = response.events.filter(
             (event) =>
               event.status === "uploaded" &&
@@ -23,20 +19,16 @@ const BeyondLagos = () => {
           );
           setEvents(featuredEvents || []);
           console.log(featuredEvents);
-          return events;
+        } else {
+          console.error("Failed to fetch events:", response.error);
         }
-      } else {
-        console.error("Failed to fetch events:", response.error);
+      } catch (error) {
+        console.error("Error fetching events:", error);
       }
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    }
-  };
+    };
 
-  // Adjust itemsPerPage based on screen size
-  useEffect(() => {
-    handleFetchEvents();
-  }, []);
+    fetchEventsData();
+  }, []); // No dependencies since everything is contained within the effect
   const handleTicketSale = (id) => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
