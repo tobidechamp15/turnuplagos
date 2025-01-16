@@ -17,8 +17,16 @@ const Banner = () => {
     try {
       const response = await fetchBanner();
       if (response.success) {
-        setBanners(response.banner || []);
+        // Filter the banners with status 'uploaded'
+        const uploadedBanners = response.banner.filter(
+          (banners) => banners.status === "uploaded"
+        );
+
+        // Set the filtered banners to the state
+        setBanners(uploadedBanners);
       } else {
+        // Handle the case where the response is not successful
+        console.log("Error: Unable to fetch banners");
       }
     } catch (error) {
       alert("Error fetching banners:", error);
