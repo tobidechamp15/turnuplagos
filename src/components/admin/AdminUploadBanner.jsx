@@ -319,7 +319,7 @@ const AdminUploadBanner = () => {
       <section className="w-full flex xsm:flex-col gap-4 items-center my-3 justify-center">
         {!userVerified && (
           <button
-            className="btn btn-light w-fit"
+            className="btn btn-primary w-fit"
             onClick={() => setEmailReg(true)}
           >
             Verify Email
