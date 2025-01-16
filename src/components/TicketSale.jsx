@@ -14,7 +14,9 @@ const TicketSale = ({ eventId, closeTicket }) => {
   const [ticketCounts, setTicketCounts] = useState({});
   const [email, setEmail] = useState(""); // To track the email input for free ticket registration
   const [emailReg, setEmailReg] = useState(false);
-
+  const [freeTicketCounts, setFreeTicketCounts] = useState({
+    "Free Ticket": 0,
+  });
   useEffect(() => {
     const getEvent = async () => {
       setLoading(true);
@@ -163,6 +165,23 @@ const TicketSale = ({ eventId, closeTicket }) => {
   if (loading) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error}</div>;
+  const handleAddFreeTicket = async (ticketType) => {
+    if (ticketType === "Free Ticket") {
+      const newCount = freeTicketCounts[ticketType] + 1;
+
+      // Update the local state
+      setFreeTicketCounts((prev) => ({ ...prev, [ticketType]: newCount }));
+    }
+  };
+
+  const handleRemoveFreeTicket = async (ticketType) => {
+    if (ticketType === "Free Ticket" && freeTicketCounts[ticketType] > 0) {
+      const newCount = freeTicketCounts[ticketType] - 1;
+
+      // Update the local state
+      setFreeTicketCounts((prev) => ({ ...prev, [ticketType]: newCount }));
+    }
+  };
 
   return (
     <div className="h-screen fixed flex items-center justify-center top-0 left-0 w-full bg-[#00000067]">
@@ -179,40 +198,66 @@ const TicketSale = ({ eventId, closeTicket }) => {
         {event && (
           <div className="p-4 pt-0">
             <span>{event.eventFormData.name}</span>
-            <ul className="flex flex-col gap-2 mt-1">
-              {event.ticketInfo.categories.map((category, index) => (
-                <li
-                  key={index}
-                  className="flex flex-col items-center mb-3 mt-2 gap-4"
-                >
-                  <div className="flex justify-between w-full">
-                    <span>
-                      {category.name} - {category.price}
-                    </span>
-                    <span className="text-gray-400">
-                      ( {category.quantity} available)
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center gap-2 w-full">
-                    <button
-                      onClick={() => handleRemoveTicket(category.name)}
-                      className="btn btn-light px-3 py-2"
-                    >
-                      -
-                    </button>
-                    <span className="cat-name">
-                      {ticketCounts[category.name]}
-                    </span>
-                    <button
-                      onClick={() => handleAddTicket(category.name)}
-                      className="btn btn-light px-3 py-2"
-                    >
-                      +
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>{" "}
+            {event.ticketInfo.ticketType === "Paid" && (
+              <ul className="flex flex-col gap-2 mt-1">
+                {event.ticketInfo.categories.map((category, index) => (
+                  <li
+                    key={index}
+                    className="flex flex-col items-center mb-3 mt-2 gap-4"
+                  >
+                    <div className="flex justify-between w-full">
+                      <span>
+                        {category.name} - {category.price}
+                      </span>
+                      <span className="text-gray-400">
+                        ( {category.quantity} available)
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center gap-2 w-full">
+                      <button
+                        onClick={() => handleRemoveTicket(category.name)}
+                        className="btn btn-light px-3 py-2"
+                      >
+                        -
+                      </button>
+                      <span className="cat-name">
+                        {ticketCounts[category.name]}
+                      </span>
+                      <button
+                        onClick={() => handleAddTicket(category.name)}
+                        className="btn btn-light px-3 py-2"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}{" "}
+            {event.ticketInfo?.ticketType === "Free" && (
+              <div>
+                <span>Free Tickets - ₦0.00</span>
+                <div className="flex justify-between items-center gap-2 w-full mt-2">
+                  <button
+                    onClick={() => handleRemoveFreeTicket("Free Ticket")}
+                    className="btn btn-light px-3 py-2"
+                    aria-label="Remove free ticket"
+                  >
+                    -
+                  </button>
+                  <span className="cat-name">
+                    {freeTicketCounts["Free Ticket"]}
+                  </span>
+                  <button
+                    onClick={() => handleAddFreeTicket("Free Ticket")}
+                    className="btn btn-light px-3 py-2"
+                    aria-label="Add free ticket"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
             {emailReg && (
               <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="text-white bg-[#180707] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
@@ -256,6 +301,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
             <button
               onClick={() => setEmailReg(true)}
               className="btn btn-light w-full mt-4"
+              disabled
             >
               Buy
             </button>
