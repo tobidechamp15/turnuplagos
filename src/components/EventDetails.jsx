@@ -37,8 +37,8 @@ const EventDetails = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="bg-black h-screen">
-      <div className="container-md bg-black">
+    <div className="bg-[#180707] h-screen">
+      <div className="container-md ">
         <div className="text-white text-[32px] xsm:text-[16px] p-8">
           Event <span className="text-[#FFDE00]">Details</span>
         </div>
