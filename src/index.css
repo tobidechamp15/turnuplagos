@@ -173,6 +173,15 @@ a {
     color: #ffffff;
   }
 }
+.home-suggest {
+  background-image: url("./assets/bgImg.svg");
+
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-size: 100%;
+  background-position: center;
+}
 @media (min-width: 1025px) and (max-width: 1279px) {
   .home-suggest {
     gap: 30px !important;
