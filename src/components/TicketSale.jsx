@@ -112,7 +112,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
     }
 
     const handler = window.PaystackPop.setup({
-      key: "pk_live_a4273eeccb94ab1c875c4ff082b351e36ae33122", // Replace with your Paystack public key
+      key: "pk_test_320aaa9b190250ca1755773b0e5e47e1a6eab29e", // Replace with your Paystack public key
       email: email, // Customer's email
       amount: totalPrice * 100, // Convert to kobo (₦1 = 100 kobo)
       currency: "NGN",
@@ -301,7 +301,6 @@ const TicketSale = ({ eventId, closeTicket }) => {
             <button
               onClick={() => setEmailReg(true)}
               className="btn btn-light w-full mt-4"
-              disabled
             >
               Buy
             </button>
