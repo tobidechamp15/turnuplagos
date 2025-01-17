@@ -10,6 +10,7 @@ const SideBar = ({ onClose }) => {
     { href: "/about", label: "About TUL" },
     { href: "/exploreLagos", label: "Explore Lagos" },
     { href: "/beyondLagos", label: "Beyond Lagos" },
+    { href: "/manage-ticket", label: "ManageTickets" },
     { href: "/contact", label: "Contact" },
   ];
   const navigate = useNavigate();

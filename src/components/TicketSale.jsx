@@ -6,6 +6,8 @@ import createTickets, {
   fetchEventById,
   updateTicketQuantity,
 } from "../utils/eventsFetched";
+import ViewReferenceCode from "./ViewReferenceCode";
+import { useNavigate } from "react-router-dom";
 
 const TicketSale = ({ eventId, closeTicket }) => {
   const [event, setEvent] = useState(null);
@@ -14,9 +16,12 @@ const TicketSale = ({ eventId, closeTicket }) => {
   const [ticketCounts, setTicketCounts] = useState({});
   const [email, setEmail] = useState(""); // To track the email input for free ticket registration
   const [emailReg, setEmailReg] = useState(false);
+  const [viewReferenceCode, setViewReferenceCode] = useState(false);
+  const [referenceCode, setReferenceCode] = useState(false);
   const [freeTicketCounts, setFreeTicketCounts] = useState({
     "Free Ticket": 0,
   });
+  const navigate = useNavigate();
   useEffect(() => {
     const getEvent = async () => {
       setLoading(true);
@@ -130,13 +135,20 @@ const TicketSale = ({ eventId, closeTicket }) => {
                 count,
               })
             );
-            await createTickets(eventId, purchaseDetails, email);
+            console.log("purchase details", purchaseDetails);
+            const referenceCode = `REF-${Math.random()
+              .toString(36)
+              .substr(2, 9)
+              .toUpperCase()}`;
+            await createTickets(eventId, purchaseDetails, email, referenceCode);
 
             const ticketResponse = await updateTicketQuantity(
               eventId,
               purchaseDetails
             );
             if (ticketResponse.success) {
+              localStorage.setItem("referenceCode", referenceCode);
+              navigate("/view/reference-code");
               alert("Tickets successfully purchased!");
               closeTicket();
             } else {
@@ -165,12 +177,14 @@ const TicketSale = ({ eventId, closeTicket }) => {
   if (loading) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error}</div>;
+
   const handleAddFreeTicket = async (ticketType) => {
     if (ticketType === "Free Ticket") {
       const newCount = freeTicketCounts[ticketType] + 1;
 
       // Update the local state
       setFreeTicketCounts((prev) => ({ ...prev, [ticketType]: newCount }));
+      console.log(freeTicketCounts);
     }
   };
 
@@ -181,6 +195,49 @@ const TicketSale = ({ eventId, closeTicket }) => {
       // Update the local state
       setFreeTicketCounts((prev) => ({ ...prev, [ticketType]: newCount }));
     }
+  };
+  const handleFreeTicketPurchase = async () => {
+    // Check if any ticket is selected
+    const ticketsSelected = Object.values(freeTicketCounts).some(
+      (count) => count > 0
+    );
+    const purchaseDetails = Object.entries(freeTicketCounts).map(
+      ([categoryName, count]) => ({
+        categoryName,
+        count,
+      })
+    );
+    if (!ticketsSelected) {
+      alert("Please select at least one ticket.");
+
+      return;
+    }
+    try {
+      const freeTicketResponse = await updateTicketQuantity(
+        eventId,
+        purchaseDetails
+      );
+      if (freeTicketResponse.success) {
+        alert("Tickets successfully registered!");
+        closeTicket();
+      } else {
+        alert(`Error registering tickets: ${freeTicketResponse.error}`);
+      }
+    } catch (err) {
+      console.error("Error during ticket update:", err);
+      alert("An error occurred while registering your tickets.");
+    }
+
+    const referenceCode = `REF-${Math.random()
+      .toString(36)
+      .substr(2, 9)
+      .toUpperCase()}`;
+    await createTickets(eventId, purchaseDetails, email, referenceCode);
+    setReferenceCode(referenceCode);
+    localStorage.setItem("referenceCode", referenceCode);
+    navigate("/view/reference-code");
+    setViewReferenceCode(true);
+    return;
   };
 
   return (
@@ -195,6 +252,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
           <p>Buy Ticket</p>
           <span></span>
         </div>
+
         {event && (
           <div className="p-4 pt-0">
             <span>{event.eventFormData.name}</span>
@@ -257,6 +315,9 @@ const TicketSale = ({ eventId, closeTicket }) => {
                   </button>
                 </div>
               </div>
+            )}{" "}
+            {viewReferenceCode && (
+              <ViewReferenceCode referenceCode={referenceCode} />
             )}
             {emailReg && (
               <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
@@ -298,12 +359,22 @@ const TicketSale = ({ eventId, closeTicket }) => {
                 <FontAwesomeIcon icon={faNairaSign} /> {calculateTotalPrice()}
               </span>
             </div>
-            <button
-              onClick={() => setEmailReg(true)}
-              className="btn btn-light w-full mt-4"
-            >
-              Buy
-            </button>
+            {event.ticketInfo?.ticketType === "Free" && (
+              <button
+                className="btn btn-light w-full mt-4"
+                onClick={handleFreeTicketPurchase}
+              >
+                Get Ticket
+              </button>
+            )}
+            {event.ticketInfo?.ticketType === "Paid" && (
+              <button
+                onClick={() => setEmailReg(true)}
+                className="btn btn-light w-full mt-4"
+              >
+                Buy
+              </button>
+            )}
           </div>
         )}
       </div>

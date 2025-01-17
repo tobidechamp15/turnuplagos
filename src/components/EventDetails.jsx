@@ -68,11 +68,12 @@ const EventDetails = () => {
               <span className="text-lg font-semibold">Tickets</span>
               <ul className="list-disc pl-5">
                 <li>Tickets: {event.ticketInfo.ticketType}</li>
-                {event.ticketInfo.categories.map((category, index) => (
-                  <li key={index}>
-                    {category.name}: {category.price}
-                  </li>
-                ))}
+                {event.ticketInfo.ticketType === "Paid" &&
+                  event.ticketInfo.categories.map((category, index) => (
+                    <li key={index}>
+                      {category.name}: {category.price ?? 0}
+                    </li>
+                  ))}
               </ul>
               {openTicket && (
                 <TicketSale

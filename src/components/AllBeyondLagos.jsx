@@ -39,7 +39,7 @@ const AllBeyondLagos = () => {
   };
 
   return (
-    <div className="text-[#FFDE00]  container">
+    <div className="text-[#FFDE00]  container min-h-screen">
       <div className=" md:text-[32px]">Events</div>{" "}
       <div className="flex gap-[48px] flex-wrap justify-center ">
         {events.map((event) => (

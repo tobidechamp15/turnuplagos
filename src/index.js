@@ -31,6 +31,8 @@ import ForgotPassword from "./components/admin/ForgotPassword.jsx";
 import ResetPasswordMessage from "./components/admin/ResetMessage.jsx";
 import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
 import AdminUploadBanner from "./components/admin/AdminUploadBanner.jsx";
+import ManageTIcket from "./components/ManageTIcket.jsx";
+import ViewReferenceCode from "./components/ViewReferenceCode.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,7 @@ const router = createBrowserRouter([
       { path: "/promote-banner", element: <PromoteBanner /> },
       { path: "/promote-event", element: <PromoteEvent /> },
       { path: "/ticket-info", element: <TicketInfo /> },
+      { path: "/manage-ticket", element: <ManageTIcket /> },
       { path: "/event-market", element: <EventMarket /> },
       { path: "/event-review", element: <EventReview /> },
     ],
@@ -79,6 +82,10 @@ const router = createBrowserRouter([
   { path: "/signup", element: <Signup /> },
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-message", element: <ResetPasswordMessage /> },
+  {
+    path: "/view/reference-code",
+    element: <ViewReferenceCode />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

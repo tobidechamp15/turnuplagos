@@ -124,12 +124,12 @@ export const updateTicketQuantity = async (eventId, purchaseDetails) => {
   }
 };
 
-export const fetchTicketByReference = async (transactionRef) => {
+export const fetchTicketByReference = async (referenceCode) => {
   try {
     const ticketsRef = collection(db, "tickets");
     const ticketsQuery = query(
       ticketsRef,
-      where("transactionRef", "==", transactionRef)
+      where("referenceCode", "==", referenceCode)
     );
     const querySnapshot = await getDocs(ticketsQuery);
 
@@ -151,8 +151,38 @@ export const fetchTicketByReference = async (transactionRef) => {
     return { success: false, error: error.message };
   }
 };
+export const createFreeTickets = async (
+  eventId,
+  purchaseDetails,
+  referenceCode
+) => {
+  try {
+    const freeTicketRef = collection(db, "tickets");
+    for (const { categoryName, count } of purchaseDetails) {
+      for (let i = 0; count; i++) {
+        await addDoc(freeTicketRef, {
+          eventId,
+          referenceCode,
+          categoryName,
+          timestamp: serverTimestamp(),
+          createdAt: new Date(),
+          isUsed: false,
+        });
+      }
+    }
 
-const createTickets = async (eventId, purchaseDetails, userEmail) => {
+    alert("Free Tickets created successfully");
+  } catch (error) {
+    alert(error, "creating ticket error");
+  }
+};
+
+const createTickets = async (
+  eventId,
+  purchaseDetails,
+  userEmail,
+  referenceCode
+) => {
   try {
     const ticketsRef = collection(db, "tickets");
 
@@ -162,6 +192,8 @@ const createTickets = async (eventId, purchaseDetails, userEmail) => {
           eventId,
           categoryName,
           userEmail,
+          timestamp: serverTimestamp(),
+          referenceCode,
           createdAt: new Date(),
           isUsed: false, // Field to track if the ticket has been used
         });
