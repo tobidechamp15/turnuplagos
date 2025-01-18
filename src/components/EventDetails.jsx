@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchEventById } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
 import "../index.css";
+import Loader from "./Loader";
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ const EventDetails = () => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
   };
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   if (error) return <div>Error: {error}</div>;
 

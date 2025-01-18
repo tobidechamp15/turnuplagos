@@ -3,7 +3,7 @@ import newsImg from "../assets/newsImg.svg";
 
 const Newsletter = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center my-7">
+    <div className="flex flex-col md:flex-row items-center justify-center py-[50px] bg-black px-6">
       <section className="flex flex-col  h-full md:p-4 gap-4 justify-between items-start">
         <span className="text-2xl text-white">
           Stay Informed with Our Newsletter

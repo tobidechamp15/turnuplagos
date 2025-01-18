@@ -8,6 +8,7 @@ import createTickets, {
 } from "../utils/eventsFetched";
 import ViewReferenceCode from "./ViewReferenceCode";
 import { useNavigate } from "react-router-dom";
+import AdminLoader from "./admin/AdminLoader";
 
 const TicketSale = ({ eventId, closeTicket }) => {
   const [event, setEvent] = useState(null);
@@ -174,7 +175,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
     e.preventDefault();
     handlePurchase(email);
   };
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <AdminLoader />;
 
   if (error) return <div>Error: {error}</div>;
 

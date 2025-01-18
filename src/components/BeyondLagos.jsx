@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
+import Loader from "./Loader";
 
 const BeyondLagos = () => {
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
   useEffect(() => {
     const fetchEventsData = async () => {
+      setIsLoading(true);
+
       try {
         const response = await fetchEvents();
         if (response.success) {
@@ -24,6 +28,8 @@ const BeyondLagos = () => {
         }
       } catch (error) {
         console.error("Error fetching events:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -33,6 +39,8 @@ const BeyondLagos = () => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
   };
+  if (isLoading) return <Loader />;
+
   return (
     <div className="flex flex-col my-6 w-full md:px-4 container">
       {/* Title */}

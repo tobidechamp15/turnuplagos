@@ -33,6 +33,7 @@ import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
 import AdminUploadBanner from "./components/admin/AdminUploadBanner.jsx";
 import ManageTIcket from "./components/ManageTIcket.jsx";
 import ViewReferenceCode from "./components/ViewReferenceCode.jsx";
+import DiscoverLagos from "./components/admin/DiscoverLagos.jsx";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,7 @@ const router = createBrowserRouter([
   { path: "/signup", element: <Signup /> },
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-message", element: <ResetPasswordMessage /> },
+  { path: "/discover-lagos", element: <DiscoverLagos /> },
   {
     path: "/view/reference-code",
     element: <ViewReferenceCode />,

@@ -125,9 +125,12 @@ const Home = () => {
             cultural landmarks to the hottest nightlife spots, find your next
             adventure in the city that never sleeps.
           </span>
-          <button className="btn btn-light w-fit md:px-[42px]">
+          <Link
+            to="/discover-lagos"
+            className="btn btn-light w-fit md:px-[42px]"
+          >
             Discover Lagos
-          </button>
+          </Link>
         </section>
       </div>
 

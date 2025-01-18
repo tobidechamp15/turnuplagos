@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import AdminLoader from "./admin/AdminLoader";
 import { fetchBanner } from "../utils/eventsFetched";
+import Loader from "./Loader";
 
 const Banner = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +49,7 @@ const Banner = () => {
     }, 3000); // Change slide every 3 seconds
     return () => clearInterval(interval);
   }, [banners.length]);
-  if (isLoading) return <AdminLoader />;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="relative w-full h-full overflow-hidden g flex flex-col items-center justify-center">
