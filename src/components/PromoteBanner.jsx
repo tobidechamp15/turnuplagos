@@ -125,7 +125,7 @@ const PromoteBanner = () => {
           console.log(localBanner);
           return; // Don't send another verification email if already verified
         } else {
-          console.log("user unverifed");
+          console.log("user unverified");
           window.location.reload(); // Reload the page to reflect the changes
           console.log("User exists but email is not verified.");
         }
@@ -213,7 +213,7 @@ const PromoteBanner = () => {
         setUserVerified(false); // Reset the verification status
         alert("Banner details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
-        navigate("/home"); // Redirect to the home page
+        navigate("/"); // Redirect to the home page
       } catch (error) {
         console.error("Error uploading event details:", error);
       }

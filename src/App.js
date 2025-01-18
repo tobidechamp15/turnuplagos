@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import SideBar from "./components/SideBar";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { href: "/home", label: "Home" },
+    { href: "/", label: "Home" },
     { href: "/about", label: "About TUL" },
     { href: "/exploreLagos", label: "Explore Lagos" },
     { href: "/beyondLagos", label: "Beyond Lagos" },
@@ -22,9 +22,9 @@ export default function App() {
     <div className="bg-[#180707] container-fluid flex flex-col gap-2 relative home-sugg">
       {isOpen && <SideBar onClose={() => setIsOpen(false)} />}
       <nav className="z-10 flex bg-[#180707] xsm:fixed xsm:top-0 xsm:left-0 px-2 !max-w-full md:justify-around justify-between xsm:pt-[16px] pb-4 md:mt-[48px] items-center xsm:container">
-        <div>
+        <Link to="/">
           <img src={logo} alt="logo" className="xsm:w-[64px] md:w-[100px]" />
-        </div>
+        </Link>
         <div className="gap-[30px] flex xsm:hidden md:gap-[10px] lg:gap-[30px] md:m">
           {navLinks.map((link) => (
             <NavLink

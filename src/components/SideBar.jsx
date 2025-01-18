@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const SideBar = ({ onClose }) => {
   const navLinks = [
-    { href: "/home", label: "Home" },
+    { href: "/", label: "Home" },
     { href: "/about", label: "About TUL" },
     { href: "/exploreLagos", label: "Explore Lagos" },
     { href: "/beyondLagos", label: "Beyond Lagos" },

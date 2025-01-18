@@ -80,7 +80,7 @@ const EventReview = () => {
         // setUserVerified(false); // Reset the verification status
         alert("Event details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
-        navigate("/home"); // Redirect to the home page
+        navigate("/"); // Redirect to the home page
       } catch (error) {
         console.error("Error uploading event details:", error);
       }
