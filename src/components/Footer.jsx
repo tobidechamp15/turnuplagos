@@ -5,7 +5,7 @@ import instaImg from "../assets/instaImg.svg";
 
 const Footer = () => {
   return (
-    <div className="w-full bg-black text-white py-4 flex flex-col items-center gap-[30px]">
+    <div className="w-full bg-blck text-white py-4 flex flex-col items-center gap-[30px]">
       <hr className="text-white !border-2 !border-white w-full" />
       <div className="flex flex-col gap-[24px] items-center w-full">
         <div className="flex justify-between gap-[45px]">
