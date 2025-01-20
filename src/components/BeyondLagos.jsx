@@ -42,7 +42,7 @@ const BeyondLagos = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex flex-col my-6 w-full md:px-4 container">
+    <div className="flex flex-col py-6 w-full md:px-4 container">
       {/* Title */}
       <span className="text-[32px] text-[#FFDE00] mb-6">
         Beyond <span className="text-white">Lagos</span>
