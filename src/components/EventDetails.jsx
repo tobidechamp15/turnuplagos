@@ -4,6 +4,7 @@ import { fetchEventById } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
 import "../index.css";
 import Loader from "./Loader";
+import BeyondLagos from "./BeyondLagos";
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -108,6 +109,7 @@ const EventDetails = () => {
 
         <div className="my-5 text-white">You may also like...</div>
         <hr className="my-3 relative w-full" />
+        <BeyondLagos />
       </div>
     </div>
   );
