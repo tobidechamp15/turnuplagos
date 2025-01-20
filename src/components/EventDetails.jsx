@@ -106,7 +106,7 @@ const EventDetails = () => {
           </section>
         )}
 
-        <div className="my-5">You may also like...</div>
+        <div className="my-5 text-white">You may also like...</div>
         <hr className="my-3 relative w-full" />
       </div>
     </div>
