@@ -107,7 +107,7 @@ const LagosToday = () => {
                   {event.ticketInfo.categories.some(
                     (category) => category.quantity === 0
                   )
-                    ? "Ticket Unavailable"
+                    ? "Buy Ticket"
                     : "Buy Ticket"}
                 </button>
               </div>
