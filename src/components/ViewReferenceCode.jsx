@@ -9,7 +9,12 @@ const ViewReferenceCode = () => {
       <Link to="/manage-ticket" className="text-primary ">
         here{" "}
       </Link>
-      to get ticket
+      Your reference code is <strong>{referenceCode} </strong>. Please copy this
+      code as it is essential for getting your ticket. Click
+      <Link to="/manage-ticket" className="text-primary ">
+        here{" "}
+      </Link>{" "}
+      to proceed and get your ticket to get ticket
     </div>
   );
 };
