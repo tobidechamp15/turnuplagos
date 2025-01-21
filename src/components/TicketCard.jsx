@@ -73,9 +73,10 @@ const TicketCard = ({ ticketInfo }) => {
                   Time
                   {eventTime && <p className="mt-2 text-sm">{eventTime}</p>}
                 </div>
-                <span className="text-lg font-semibold">
+                <div className="text-lg font-semibold">
+                  Ticket Type
                   {ticket.categoryName}
-                </span>
+                </div>
               </div>
             </div>
           );
