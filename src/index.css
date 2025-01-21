@@ -177,9 +177,9 @@ a {
   background-image: url("./assets/bgImg.svg");
 
   background-repeat: no-repeat;
-  background-size: cover;
-
-  background-size: 100%;
+  /* background-size: cover; */
+  /* background-position: bottom; */
+  /* background-size: 100%; */
   background-position: center;
 }
 .ticket-bg {
