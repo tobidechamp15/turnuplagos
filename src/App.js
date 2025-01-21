@@ -14,7 +14,7 @@ export default function App() {
     { href: "/about", label: "About TUL" },
     { href: "/exploreLagos", label: "Explore Lagos" },
     { href: "/beyondLagos", label: "Beyond Lagos" },
-    { href: "/manage-ticket", label: "Manage Tickets" },
+    // { href: "/manage-ticket", label: "Manage Tickets" },
     { href: "/contact", label: "Contact" },
   ];
 
