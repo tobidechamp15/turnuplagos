@@ -126,7 +126,7 @@ const ViewEvent = () => {
         </button>
         <button
           onClick={() => setEditTicketActive(true)}
-          className="btn btn-light md:w-full"
+          className="btn btn-ssecondary md:w-full"
         >
           Edit Ticket Information
         </button>
