@@ -10,7 +10,7 @@ const Footer = () => {
       <hr className="text-white !border-2 !border-white w-full" />
       <div className="flex flex-col gap-[24px] items-center w-full">
         <div className="flex justify-between gap-[45px]">
-          <Link to=" https://www.facebook.com/TurnUpLagos/">
+          <Link to="https://www.facebook.com/TurnUpLagos/">
             <img src={faceImg} alt="Facebook Icon" className="cursor-pointer" />
           </Link>
           <Link to="https://x.com/TurnUpLag">
