@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { fetchTicketByReference } from "../utils/eventsFetched";
+import {
+  fetchTicketByReference,
+  updateTicketById,
+} from "../utils/eventsFetched";
 import TicketCard from "./TicketCard";
 import Loader from "./Loader";
 
@@ -14,8 +17,19 @@ const ManageTIcket = () => {
     try {
       const response = await fetchTicketByReference(referenceCode);
       if (response.success) {
-        console.log(response);
-        setTicketInfo(response.tickets);
+        const tickets = response.tickets;
+
+        // Check if any ticket has already been used
+        const alreadyUsed = tickets.some((ticket) => ticket.isUsed);
+
+        if (alreadyUsed) {
+          alert("Cannot retrieve ticket. It has already been used.");
+          return;
+        } else {
+          console.log(response.tickets);
+          updateTicketByIdFunc(referenceCode);
+          setTicketInfo(response.tickets);
+        }
       }
     } catch (error) {
       alert("Error fetching Ticket:", error);
@@ -24,7 +38,12 @@ const ManageTIcket = () => {
     }
   };
   if (isLoading) return <Loader />;
-
+  const updateTicketByIdFunc = async (code) => {
+    const res = await updateTicketById(code);
+    if (res.success) {
+      console.log(res);
+    }
+  };
   return (
     <div className="flex flex-col my-6 w-full md:px-4 container min-h-screen  md:pt-[18px]">
       ManageTIcket

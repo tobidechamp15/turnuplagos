@@ -123,6 +123,31 @@ export const updateTicketQuantity = async (eventId, purchaseDetails) => {
     return { success: false, error: error.message };
   }
 };
+export const updateTicketById = async (referenceCode) => {
+  try {
+    const ticketsRef = collection(db, "tickets");
+    const q = query(ticketsRef, where("referenceCode", "==", referenceCode));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return {
+        success: false,
+        error: "No tickets found for the given reference code",
+      };
+    }
+
+    const updatePromises = querySnapshot.docs.map((docSnapshot) =>
+      updateDoc(docSnapshot.ref, { isUsed: true })
+    );
+
+    await Promise.all(updatePromises);
+
+    return { success: true, message: "Ticket(s) updated successfully" };
+  } catch (error) {
+    console.error("Error updating ticket by reference:", error);
+    return { success: false, error: error.message };
+  }
+};
 
 export const fetchTicketByReference = async (referenceCode) => {
   try {
