@@ -119,7 +119,7 @@ const ViewEvent = () => {
       )}
       <section className="w-full flex xsm:flex-col gap-4 justify-between">
         <button
-          className="btn btn-light md:w-full"
+          className="btn btn-secondary md:w-full"
           onClick={() => setEditEventActive(true)}
         >
           Edit Event Information
