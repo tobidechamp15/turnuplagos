@@ -47,9 +47,11 @@ const TicketCard = ({ ticketInfo }) => {
         unit: "px",
         format: "a4",
       });
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
 
       // Adjust image placement and size
-      pdf.addImage(data, "PNG", 0, 0, 400, 500); // Adjust based on your content size
+      pdf.addImage(data, "PNG", 0, 0, pageWidth, pageHeight); // Adjust based on your content size
       pdf.save("tickets.pdf");
     }, 100); // Delay to ensure content is rendered
   };
