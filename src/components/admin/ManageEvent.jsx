@@ -96,7 +96,7 @@ const ManageEvent = () => {
                 </section>
                 <Link
                   to={`/dashboard/manage-event/${event.id}`}
-                  className="btn btn-secondary w-full"
+                  className="btn btn-outline-secondary w-full"
                 >
                   View Event
                 </Link>
