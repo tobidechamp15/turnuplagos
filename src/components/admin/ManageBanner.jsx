@@ -81,7 +81,7 @@ const ManageBanner = () => {
         <section className="flex flex-col md:flex-row md:gap-4   my-2 w-fit">
           <Link
             to="/dashboard/admin-upload-banner"
-            className="btn btn-light w-fit"
+            className="btn btn-outline-secondary w-fit"
           >
             {" "}
             <FontAwesomeIcon icon={faUpload} /> Upload Banner

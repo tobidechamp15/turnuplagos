@@ -53,7 +53,12 @@ const ManageEvent = () => {
   return (
     <div>
       <div className="pending-section">
-        <span className="text-[#4A5154] text-[16]">Events</span>
+        <div className="flex justify-between items-center w-full">
+          <span className="text-[#4A5154] text-[16]">Events</span>
+          <Link className="btn btn-outline-secondary" to="/promote-event">
+            Upload Events
+          </Link>
+        </div>
         {events.length > 0 ? (
           currentEvents
             .filter((event) => event.status === "uploaded")
