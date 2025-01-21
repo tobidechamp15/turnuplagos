@@ -100,11 +100,16 @@ const LagosToday = () => {
                 <button
                   className="btn btn-light w-full"
                   onClick={() => handleTicketSale(event.id)}
-                  disabled={event.ticketInfo.categories.some(
-                    (category) => category.quantity === 0
-                  )}
+                  // disabled={event.ticketInfo.categories.some(
+                  //   (category) => category.quantity === 0
+                  // )}
                 >
-                  Buy Ticket
+                  {" "}
+                  {event.ticketInfo.categories.some((category) =>
+                    category.quantity === 0
+                      ? "Ticket Unavailable"
+                      : "Buy Ticket"
+                  )}
                 </button>
               </div>
             </div>

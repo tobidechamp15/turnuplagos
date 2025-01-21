@@ -47,18 +47,12 @@ const Home = () => {
     <div className="flex flex-col items-center">
       <Banner />
       {/* Hero Section */}
-      <div className="hero-text flex flex-col mt-16 text-wrap text-center">
-        <span>Where Every Day Feels Like a Party!</span>
-      </div>
-      <span className="hero-subtext xsm:max-w-[340px] text-center">
-        From epic events to must-visit hot spots, let’s turn up the vibe and
-        explore Lagos like never before.
-      </span>
-      <div className="text-[32px] text-white my-6 flex gap-1 items-start container w-full">
+
+      <div className="text-[32px] text-white mt-6 mb--2 flex gap-1 items-start container w-full">
         Featured <span className="text-[#FFDE00]">Events</span>
       </div>
       {/* Event Carousel */}
-      <section className="flex flex-col justify-around my-[40px] w-full container">
+      <section className="flex flex-col justify-around mt-[16px] mb-[40px] w-full container">
         <section className="flex justify-around items-center mt-2">
           {/* Left Arrow */}
 
