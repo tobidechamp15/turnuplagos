@@ -19,7 +19,9 @@ const Home = () => {
       if (response.success) {
         // Find events with eventMarket.featureEvent === "Yes"
         const featuredEvents = response.events.filter(
-          (event) => event.eventMarket.featureEvent === "yes"
+          (event) =>
+            event.eventMarket.featureEvent === "yes" &&
+            event.status === "uploaded"
         );
         setEvents(featuredEvents || []);
       } else {
