@@ -51,7 +51,7 @@ const Home = () => {
       {/* Hero Section */}
 
       <div className="text-[32px] text-white mt-6 mb--2 flex gap-1 items-start container w-full">
-        Featured <span className="text-[#FFDE00]">Events</span>
+        Featured Events
       </div>
       {/* Event Carousel */}
       <section className="flex flex-col justify-around mt-[16px] mb-[40px] w-full container">

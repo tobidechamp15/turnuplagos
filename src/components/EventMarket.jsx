@@ -88,7 +88,7 @@ const EventMarket = () => {
   return (
     <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
-        Event <span className="text-[#FFDE00]">Marketing</span>
+        Event <span className="text-[#fff]">Marketing</span>
       </span>
       <div className="flex xsm:flex-col gap-2 my-3 md:flex-row">
         <div className="flex flex-col items-center gap-2">

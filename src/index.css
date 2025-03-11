@@ -27,7 +27,12 @@
   scrollbar-width: thin; /* Thin scrollbar */
   scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
 }
-
+input {
+  color-scheme: dark;
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -45,7 +50,7 @@ body {
   font-family: "Poppins" !important;
 
   color: white !important;
-  background-color: #180707;
+  background-color: #000;
   font-family: Arial, Helvetica, sans-serif;
 }
 a {
@@ -173,15 +178,16 @@ a {
     color: #ffffff;
   }
 }
-.home-sugg {
+/* .home-sugg {
   background-image: url("./assets/bgImg.svg");
 
   background-repeat: no-repeat;
   /* background-size: cover; */
-  /* background-position: bottom; */
-  /* background-size: 100%; */
-  background-position: center;
-}
+/* background-position: bottom; */
+/* background-size: 100%; */
+/* background-position: center; */
+/* } */
+
 .ticket-bg {
   background: linear-gradient(#ffffff, #ffdd0078), url("./assets/ticketBg.svg");
   background-size: cover;

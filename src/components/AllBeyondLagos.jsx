@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
-import TicketSale from "./TicketSale";
+// import TicketSale from "./TicketSale";
 import Loader from "./Loader";
 
 const AllBeyondLagos = () => {
   const [events, setEvents] = useState([]);
-  const [openTicket, setOpenTicket] = useState(false);
+  // const [openTicket, setOpenTicket] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedEventId, setSelectedEventId] = useState(null);
+  // const [selectedEventId, setSelectedEventId] = useState(null);
   const handleFetchEvents = async () => {
     setIsLoading(true);
     try {
@@ -38,14 +38,14 @@ const AllBeyondLagos = () => {
   useEffect(() => {
     handleFetchEvents();
   }, []);
-  const handleTicketSale = (id) => {
-    setSelectedEventId(id); // Set the selected event ID
-    setOpenTicket(true); // Open the TicketSale component
-  };
+  // const handleTicketSale = (id) => {
+  //   setSelectedEventId(id); // Set the selected event ID
+  // setOpenTicket(true); // Open the TicketSale component
+  // };
   if (isLoading) return <Loader />;
 
   return (
-    <div className="text-[#FFDE00]  container min-h-screen">
+    <div className="text-[#fff]  container min-h-screen">
       <div className=" md:text-[32px]">Events</div>{" "}
       <div className="flex gap-[48px] flex-wrap justify-center ">
         {events.map((event) => (
@@ -87,22 +87,22 @@ const AllBeyondLagos = () => {
                 >
                   View Details
                 </Link>
-                <button
+                {/* <button
                   className="btn btn-light w-full"
                   onClick={() => handleTicketSale(event.id)}
                 >
                   Buy Ticket
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
         ))}{" "}
-        {openTicket && (
+        {/* {openTicket && (
           <TicketSale
             eventId={selectedEventId}
             closeTicket={() => setOpenTicket(false)}
           />
-        )}
+        )} */}
       </div>
       <div className="flex w-full items-center justify-center my-8">
         <button className="btn btn-outline-light px-6 py-2">View More</button>

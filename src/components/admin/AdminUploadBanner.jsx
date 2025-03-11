@@ -228,7 +228,7 @@ const AdminUploadBanner = () => {
     <div className="text-white flex flex-col w-full items-center mt-[48px] min-h-screen">
       {emailReg && (
         <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="text-white bg-[#180707] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
+          <div className="text-white bg-[#000] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
             <div className="flex justify-between items-center mb-4">
               <FontAwesomeIcon icon={faX} onClick={() => setEmailReg(false)} />
               <span> Ticket Registration</span>

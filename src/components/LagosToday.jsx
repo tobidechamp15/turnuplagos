@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
-import TicketSale from "./TicketSale";
+// import TicketSale from "./TicketSale";
 import Loader from "./Loader";
 
 const LagosToday = () => {
   const [events, setEvents] = useState([]);
-  const [openTicket, setOpenTicket] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
+  // const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
+  // const [openTicket, setOpenTicket] = useState(false);
 
   const handleFetchEvents = async () => {
     setIsLoading(true);
@@ -40,18 +40,16 @@ const LagosToday = () => {
     handleFetchEvents();
   }, []);
 
-  const handleTicketSale = (id) => {
-    setSelectedEventId(id); // Set the selected event ID
-    setOpenTicket(true); // Open the TicketSale component
-  };
+  // const handleTicketSale = (id) => {
+  //   setSelectedEventId(id); // Set the selected event ID
+  //   setOpenTicket(true); // Open the TicketSale component
+  // };
   if (isLoading) return <Loader />;
 
   return (
     <div className="flex flex-col my-6 w-full md:px-4 container">
       {/* Title */}
-      <h2 className="text-[32px] text-white mb-6">
-        Lagos <span className="text-[#FFDE00]">Events</span>
-      </h2>
+      <h2 className="text-[32px] text-white mb-6">Lagos Events</h2>
 
       {/* Events Carousel */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
@@ -97,7 +95,7 @@ const LagosToday = () => {
                 >
                   View Details
                 </Link>
-                <button
+                {/* <button
                   className="btn btn-light w-full"
                   onClick={() => handleTicketSale(event.id)}
                   disabled={event.ticketInfo.categories.some(
@@ -109,17 +107,17 @@ const LagosToday = () => {
                   )
                     ? "Buy Ticket"
                     : "Buy Ticket"}
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
         ))}
-        {openTicket && (
+        {/* {openTicket && (
           <TicketSale
             eventId={selectedEventId}
             closeTicket={() => setOpenTicket(false)}
           />
-        )}
+        )} */}
       </div>
 
       {/* View More Button */}

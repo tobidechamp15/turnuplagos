@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
-import TicketSale from "./TicketSale";
+// import TicketSale from "./TicketSale";
 import Loader from "./Loader";
 
 const BeyondLagos = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [openTicket, setOpenTicket] = useState(false);
-  const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
+  // const [openTicket, setOpenTicket] = useState(false);
+  // const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
   useEffect(() => {
     const fetchEventsData = async () => {
       setIsLoading(true);
@@ -35,16 +35,16 @@ const BeyondLagos = () => {
 
     fetchEventsData();
   }, []); // No dependencies since everything is contained within the effect
-  const handleTicketSale = (id) => {
-    setSelectedEventId(id); // Set the selected event ID
-    setOpenTicket(true); // Open the TicketSale component
-  };
+  // const handleTicketSale = (id) => {
+  //   setSelectedEventId(id); // Set the selected event ID
+  //   setOpenTicket(true); // Open the TicketSale component
+  // };
   if (isLoading) return <Loader />;
 
   return (
     <div className="flex flex-col py-6 w-full md:px-4 container">
       {/* Title */}
-      <span className="text-[32px] text-[#FFDE00] mb-6">
+      <span className="text-[32px] text-[#fff] mb-6">
         Beyond <span className="text-white">Lagos</span>
       </span>
 
@@ -91,22 +91,22 @@ const BeyondLagos = () => {
                 >
                   View Details
                 </Link>
-                <button
+                {/* <button
                   className="btn btn-light w-full"
                   onClick={() => handleTicketSale(event.id)}
                 >
                   Buy Ticket
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
         ))}{" "}
-        {openTicket && (
+        {/* {openTicket && (
           <TicketSale
             eventId={selectedEventId}
             closeTicket={() => setOpenTicket(false)}
           />
-        )}
+        )} */}
       </div>
 
       {/* View More Button */}

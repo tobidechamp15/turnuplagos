@@ -243,7 +243,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
 
   return (
     <div className="h-screen fixed flex items-center justify-center top-0 left-0 w-full bg-[#00000067]">
-      <div className="bg-[#180707] text-white border !border-[#FFDE00] flex flex-col xsm:w-[80%] sm:w-[70%] md:w-[400px] min-h-[400px] rounded-2xl mx-1">
+      <div className="bg-[#000] text-white border !border-[#FFDE00] flex flex-col xsm:w-[80%] sm:w-[70%] md:w-[400px] min-h-[400px] rounded-2xl mx-1">
         <div className="flex justify-between items-center py-4 px-3">
           <FontAwesomeIcon
             icon={faX}
@@ -322,7 +322,7 @@ const TicketSale = ({ eventId, closeTicket }) => {
             )}
             {emailReg && (
               <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="text-white bg-[#180707] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
+                <div className="text-white bg-[#000] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
                   <div className="flex justify-between items-center mb-4">
                     <FontAwesomeIcon
                       icon={faX}

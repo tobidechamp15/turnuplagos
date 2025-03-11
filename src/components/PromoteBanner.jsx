@@ -22,15 +22,17 @@ import { db } from "./firebase/config";
 import { useEffect } from "react";
 import { faInfo } from "@fortawesome/free-solid-svg-icons/faInfo";
 import { useNavigate } from "react-router-dom";
+import SuccessMessage from "./SuccessMessage";
 
 const PromoteBanner = () => {
   const [imagePreview, setImagePreview] = useState(uploadImg);
   const [socialMediaLinks, setSocialMediaLinks] = useState({ link: "" });
+  const [successMessage, setSuccessMessage] = useState({ link: "" });
   const [email, setEmail] = useState(""); // To track the email input for free ticket registration
   const [name, setName] = useState(""); // To track the email input for free ticket registration
   const [emailReg, setEmailReg] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false); // Track if the verification email is sent
-  const [userVerified, setUserVerified] = useState(false); // Track if the user email is verified
+  const [userVerified, setUserVerified] = useState(true); // Track if the user email is verified
 
   useEffect(() => {
     // Monitor user's authentication state and email verification status
@@ -211,7 +213,8 @@ const PromoteBanner = () => {
           uploadedAt: new Date(), // Add a timestamp
         });
         setUserVerified(false); // Reset the verification status
-        alert("Banner details successfully uploaded to Firestore.");
+        setSuccessMessage("Banner details successfully uploaded.");
+        // alert("Banner details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
         navigate("/"); // Redirect to the home page
       } catch (error) {
@@ -226,9 +229,16 @@ const PromoteBanner = () => {
   };
   return (
     <div className="text-white flex flex-col w-full items-center mt-[48px] min-h-screen">
+      {successMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={() => setSuccessMessage(false)}
+          duration={3000} // Optional, defaults to 3000ms
+        />
+      )}
       {emailReg && (
         <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="text-white bg-[#180707] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
+          <div className="text-white bg-[#000] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
             <div className="flex justify-between items-center mb-4">
               <FontAwesomeIcon icon={faX} onClick={() => setEmailReg(false)} />
               <span> Ticket Registration</span>
@@ -285,7 +295,7 @@ const PromoteBanner = () => {
           <FontAwesomeIcon icon={faInfo} /> Click current Image to change image
         </span>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 xsm:w-full px-2">
         <div className="mt-4 md:!w-[70vw] xsm:w-full">
           <label htmlFor="link" className="block mb-2">
             Name
@@ -326,7 +336,7 @@ const PromoteBanner = () => {
         )}
         {userVerified && (
           <button className="btn btn-light w-fit" onClick={handleUpload}>
-            Upload Event to Firestore
+            Upload Event to Admin
           </button>
         )}
       </section>

@@ -20,7 +20,7 @@ const SideBar = ({ onClose }) => {
   };
 
   return (
-    <div className="h-screen z-10 bg-[#180707] fixed w-full left-0 p-4 md:hidden gap-5 flex flex-col">
+    <div className="h-screen z-10 bg-[#000] fixed w-full left-0 p-4 md:hidden gap-5 flex flex-col">
       <div className="flex flex-col items-start">
         <FontAwesomeIcon
           icon={faX}
