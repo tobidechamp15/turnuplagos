@@ -5,7 +5,7 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  onAuthStateChanged,
+  // onAuthStateChanged,
   sendEmailVerification,
 } from "firebase/auth";
 import {
@@ -15,56 +15,58 @@ import {
   getDocs,
   query,
   setDoc,
-  updateDoc,
+  // updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "./firebase/config";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { faInfo } from "@fortawesome/free-solid-svg-icons/faInfo";
 import { useNavigate } from "react-router-dom";
 import SuccessMessage from "./SuccessMessage";
+import ErrorMessage from "./ErrorMessage";
 
 const PromoteBanner = () => {
   const [imagePreview, setImagePreview] = useState(uploadImg);
   const [socialMediaLinks, setSocialMediaLinks] = useState({ link: "" });
-  const [successMessage, setSuccessMessage] = useState({ link: "" });
+  const [successMessage, setSuccessMessage] = useState(null);
   const [email, setEmail] = useState(""); // To track the email input for free ticket registration
   const [name, setName] = useState(""); // To track the email input for free ticket registration
   const [emailReg, setEmailReg] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false); // Track if the verification email is sent
   const [userVerified, setUserVerified] = useState(true); // Track if the user email is verified
+  const [error, setError] = useState(null); // Track if the user email is verified
 
-  useEffect(() => {
-    // Monitor user's authentication state and email verification status
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("object");
-      if (user) {
-        setUserVerified(user.emailVerified);
-        // If the email is verified, update Firestore
-        if (user.emailVerified) {
-          updateUserVerificationStatus(user);
-        }
-      }
-    });
+  // useEffect(() => {
+  //   // Monitor user's authentication state and email verification status
+  //   const auth = getAuth();
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     console.log("object");
+  //     if (user) {
+  //       setUserVerified(user.emailVerified);
+  //       // If the email is verified, update Firestore
+  //       if (user.emailVerified) {
+  //         updateUserVerificationStatus(user);
+  //       }
+  //     }
+  //   });
 
-    return () => unsubscribe(); // Cleanup listener on component unmount
-  }, [email]);
+  //   return () => unsubscribe(); // Cleanup listener on component unmount
+  // }, [email]);
   const navigate = useNavigate();
-  const updateUserVerificationStatus = async (user) => {
-    const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
+  // const updateUserVerificationStatus = async (user) => {
+  //   const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
 
-    // Update the user's verification status in Firestore
-    try {
-      await updateDoc(userDocRef, {
-        verificationStatus: user.emailVerified, // Update verificationStatus
-      });
-      console.log("User verification status updated in Firestore.");
-      // window.location.reload(); // Reload the page to reflect the changes
-    } catch (error) {
-      console.error("Error updating verification status:", error);
-    }
-  };
+  //   // Update the user's verification status in Firestore
+  //   try {
+  //     await updateDoc(userDocRef, {
+  //       verificationStatus: user.emailVerified, // Update verificationStatus
+  //     });
+  //     console.log("User verification status updated in Firestore.");
+  //     // window.location.reload(); // Reload the page to reflect the changes
+  //   } catch (error) {
+  //     console.error("Error updating verification status:", error);
+  //   }
+  // };
 
   // Handle image upload and resize to 1440 x 239
   const handleImageUpload = (e) => {
@@ -83,13 +85,21 @@ const PromoteBanner = () => {
           // Set canvas dimensions
           canvas.width = targetWidth;
           canvas.height = targetHeight;
+          console.log(img.width);
+          if (img.width >= targetWidth && img.height >= targetHeight) {
+            setImagePreview(reader.result); // Set image if dimensions are correct
+            // Draw resized image
+            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
-          // Draw resized image
-          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-
-          // Convert canvas to a base64 image
-          const resizedImage = canvas.toDataURL("image/jpeg");
-          setImagePreview(resizedImage);
+            // Convert canvas to a base64 image
+            const resizedImage = canvas.toDataURL("image/jpeg");
+            setImagePreview(resizedImage);
+          } else {
+            setError("Image must be over 1440px by width and 300px by height");
+            // alert(
+            //   `Image must be exactly ${targetWidth}px by ${targetHeight}px.`
+            // );
+          }
         };
       };
       reader.readAsDataURL(file);
@@ -204,7 +214,7 @@ const PromoteBanner = () => {
 
     const email = localStorage.getItem("emailForUploading");
     console.log(email);
-    if (formData && userVerified && email) {
+    if (formData && userVerified) {
       try {
         // Upload event details to Firestore, including email
         await addDoc(collection(db, "banner"), {
@@ -212,7 +222,7 @@ const PromoteBanner = () => {
           email, // Make sure email is added here
           uploadedAt: new Date(), // Add a timestamp
         });
-        setUserVerified(false); // Reset the verification status
+        // setUserVerified(false); // Reset the verification status
         setSuccessMessage("Banner details successfully uploaded.");
         // alert("Banner details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
@@ -232,10 +242,12 @@ const PromoteBanner = () => {
       {successMessage && (
         <SuccessMessage
           message={successMessage}
-          onClose={() => setSuccessMessage(false)}
+          onClose={() => setSuccessMessage(null)}
           duration={3000} // Optional, defaults to 3000ms
         />
       )}
+      {error && <ErrorMessage message={error} onClose={() => setError(null)} />}
+
       {emailReg && (
         <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
           <div className="text-white bg-[#000] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
@@ -326,14 +338,14 @@ const PromoteBanner = () => {
         </div>
       </div>
       <section className="w-full flex xsm:flex-col gap-4 items-center my-3 justify-center">
-        {!userVerified && (
+        {/* {!userVerified && (
           <button
             className="btn btn-light w-fit"
             onClick={() => setEmailReg(true)}
           >
             Verify Email
           </button>
-        )}
+        )} */}
         {userVerified && (
           <button className="btn btn-light w-fit" onClick={handleUpload}>
             Upload Event to Admin

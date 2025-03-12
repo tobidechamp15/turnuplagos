@@ -105,7 +105,7 @@ const AllBeyondLagos = () => {
         )} */}
       </div>
       <div className="flex w-full items-center justify-center my-8">
-        <button className="btn btn-outline-light px-6 py-2">View More</button>
+        <button className="btn btn-light px-6 py-2">View More</button>
       </div>
     </div>
   );
