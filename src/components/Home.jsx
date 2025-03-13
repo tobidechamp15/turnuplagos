@@ -51,7 +51,7 @@ const Home = () => {
       {/* Hero Section */}
 
       <div className="text-[32px] text-white mt-6 mb--2 flex gap-1 items-start container w-full">
-        Featured <span className="text-[#FFDE00]">Events</span>
+        Featured Events
       </div>
       {/* Event Carousel */}
       <section className="flex flex-col justify-around mt-[16px] mb-[40px] w-full container">
@@ -108,11 +108,11 @@ const Home = () => {
         </section>
       </section>
 
-      <div className="w-full flex flex-col md:items-center md:flex-row gap-[48px] lg:gap-0 container home-suggest mb-[50px]">
+      <div className="w-full flex flex-col md:items-center md:flex-row gap-[48px] lg:gap-0 container home-suggest my-[100px]">
         <img
           src={lagosImg}
           alt="Lagos"
-          className="xsm:w-full md:!w-[70%] md:h-[100%] object-cover md:pe-4"
+          className="xsm:w-full md:!w-[50%] md:h-auto object-cover md:pe-4"
         />
         <section className="flex flex-col gap-3 flex-1 text-white">
           <span className="text-[32px]">Places to Visit in Lagos.</span>

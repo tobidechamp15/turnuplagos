@@ -12,13 +12,15 @@ import {
 } from "firebase/auth";
 import { query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import SuccessMessage from "./SuccessMessage";
 
 const EventReview = () => {
   const [eventDetails, setEventDetails] = useState(null);
   const [email, setEmail] = useState(""); // To track the email input for free ticket registration
   const [emailReg, setEmailReg] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false); // Track if the verification email is sent
-  const [userVerified, setUserVerified] = useState(false); // Track if the user email is verified
+  const [userVerified, setUserVerified] = useState(true); // Track if the user email is verified
+  const [success, setSuccess] = useState(null); // Track if the user email is verified
 
   const navigate = useNavigate();
 
@@ -66,9 +68,9 @@ const EventReview = () => {
 
   // Handle event upload after email verification
   const handleUpload = async () => {
-    const email = localStorage.getItem("emailForUploading");
-    console.log(email);
-    if (eventDetails && userVerified && email) {
+    // const email = localStorage.getItem("emailForUploading");
+    // console.log(email);
+    if (eventDetails && userVerified) {
       try {
         // Upload event details to Firestore, including email
         await addDoc(collection(db, "events"), {
@@ -78,18 +80,19 @@ const EventReview = () => {
           uploadedAt: new Date(), // Add a timestamp
         });
         // setUserVerified(false); // Reset the verification status
-        alert("Event details successfully uploaded to Firestore.");
+        setSuccess("Event details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
         navigate("/"); // Redirect to the home page
       } catch (error) {
         console.error("Error uploading event details:", error);
       }
-    } else {
-      setUserVerified(false); // Reset the verification status
-      console.warn(
-        "No event details available to upload, email not verified, or email is missing."
-      );
     }
+    // else {
+    //   setUserVerified(false); // Reset the verification status
+    //   console.warn(
+    //     "No event details available to upload, email not verified, or email is missing."
+    //   );
+    // }
   };
 
   // Send verification email with a custom link
@@ -166,9 +169,16 @@ const EventReview = () => {
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#FFDE00]">Review</span>
       </span>
+      {success && (
+        <SuccessMessage
+          message={success}
+          onClose={() => setSuccess(false)}
+          duration={3000} // Optional, defaults to 3000ms
+        />
+      )}
       {emailReg && (
         <div className="fixed top-0 left-0 w-full px-2 h-screen bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="text-white bg-[#180707] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
+          <div className="text-white bg-[#000] border !border-[#FFDE00] py-[44px] p-4 rounded-lg m-2">
             <div className="flex justify-between items-center mb-4">
               <FontAwesomeIcon icon={faX} onClick={() => setEmailReg(false)} />
               <span> Ticket Registration</span>
@@ -205,7 +215,7 @@ const EventReview = () => {
         </div>
       )}
       {eventDetails && (
-        <section className="flex flex-col md:flex-row gap-4 p-4 items-start justify-center">
+        <section className="flex flex-col md:flex-row gap-4 py-4 items-start justify-center">
           <span className="w-[402px] xs:w-full">
             <img
               src={eventDetails.eventMarket.imagePreview || eventFlyer}
@@ -224,15 +234,16 @@ const EventReview = () => {
               <li>End Time: {eventDetails.eventFormData.end_time}</li>
               <li>Dress Code: {eventDetails.eventFormData.dress_code}</li>
             </ul>
+            {/*
             <h3>Tickets</h3>
-            <ul>
+             <ul>
               <li>Tickets: {eventDetails.ticketInfo.ticketType}</li>
               {eventDetails.ticketInfo.categories.map((category, index) => (
                 <li key={index}>
                   {category.name}: {category.price}
                 </li>
               ))}
-            </ul>
+            </ul> */}
             <section className="w-full flex xsm:flex-col gap-4">
               {!userVerified && (
                 <button
@@ -244,7 +255,7 @@ const EventReview = () => {
               )}
               {userVerified && (
                 <button className="btn btn-light w-full" onClick={handleUpload}>
-                  Upload Event to Firestore
+                  Upload Event
                 </button>
               )}
             </section>

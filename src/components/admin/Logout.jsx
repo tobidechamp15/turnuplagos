@@ -26,14 +26,14 @@ const Logout = () => {
   if (isLoading) return <AdminLoader />;
 
   return (
-    <>
+    <span className="cursor-pointer hover:bg-red-500 h-[64px] w-[64px] rounded-[20px] transition-all flex items-center justify-center">
       <img
         src={logOutIcon}
         alt="logout"
         onClick={handleSignOut}
         className="w-[20px]"
       />
-    </>
+    </span>
   );
 };
 

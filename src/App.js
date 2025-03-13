@@ -19,10 +19,10 @@ export default function App() {
   ];
 
   return (
-    <div className="bg-[#180707]  home-sugg">
-      <div className="bg-[#180707] container-fluid flex flex-col gap-2 relative">
+    <div className="bg-[#000]  home-sugg">
+      <div className="bg-[#000] container-fluid flex flex-col gap-2 relative">
         {isOpen && <SideBar onClose={() => setIsOpen(false)} />}
-        <nav className="z-10 flex bg-[#180707] xsm:fixed xsm:top-0 xsm:left-0 px-2 !max-w-full md:justify-around justify-between xsm:pt-[16px] pb-4 md:mt-[48px] items-center xsm:container">
+        <nav className="z-10 flex bg-[#000] xsm:fixed xsm:top-0 xsm:left-0 px-2 !max-w-full md:justify-around justify-between xsm:pt-[16px] pb-4 md:mt-[48px] items-center xsm:container">
           <Link to="/">
             <img src={logo} alt="logo" className="xsm:w-[64px] md:w-[100px]" />
           </Link>

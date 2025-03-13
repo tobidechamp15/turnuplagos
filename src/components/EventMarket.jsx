@@ -88,7 +88,7 @@ const EventMarket = () => {
   return (
     <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
-        Event <span className="text-[#FFDE00]">Marketing</span>
+        Event <span className="text-[#fff]">Marketing</span>
       </span>
       <div className="flex xsm:flex-col gap-2 my-3 md:flex-row">
         <div className="flex flex-col items-center gap-2">
@@ -106,7 +106,7 @@ const EventMarket = () => {
           />
         </div>
         <div className="container-md mt-4 rounded-lg text-[#FFFFFFB2] flex flex-col">
-          <h3 className="text-sm mb-2">Feature Event</h3>
+          <h3 className="text-xl mb-2">Feature Event</h3>
           <span className="text-sm my-2">
             Would you like to feature your event on TurnUpLagos?
           </span>
@@ -133,7 +133,7 @@ const EventMarket = () => {
             </label>
           </div>
 
-          <span className="text-base my-2">
+          <span className="text-lg my-2">
             Note: Featuring your event will make it more prominent and attract
             more attention. An additional fee applies for this service.
           </span>

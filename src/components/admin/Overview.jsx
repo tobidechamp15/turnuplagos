@@ -47,11 +47,12 @@ const Overview = () => {
   const handleFetchEvents = async () => {
     try {
       const response = await fetchEvents();
-      if (response.success) {
-        console.log(response);
+      console.log("Fetched Events Response:", response); // Debugging log
+
+      if (response && response.success) {
         setEvents(response.events || []);
       } else {
-        console.error("Failed to fetch events:", response.error);
+        console.error("Failed to fetch events:", response?.error);
       }
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -63,11 +64,14 @@ const Overview = () => {
     handleFetchBanners();
   }, []);
 
-  // Calculate total pages
-  const totalPages = Math.ceil(events.length / itemsPerPage);
+  // Filter events with "pending" status first
+  const pendingEvents = events.filter((event) => event.status === "pending");
+
+  // Calculate total pages based on filtered data
+  const totalPages = Math.ceil(pendingEvents.length / itemsPerPage);
 
   // Get events for the current page
-  const currentEvents = events.slice(
+  const currentEvents = pendingEvents.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -200,13 +204,19 @@ const Overview = () => {
                   <p>{event.eventFormData.description}</p>
                   <span className="text-lg font-semibold">Details</span>
                   <ul className="list-disc pl-5">
-                    <li>Venue: {event.eventFormData.venue}</li>
-                    <li>Date: {event.eventFormData.date}</li>
-                    <li>Start Time: {event.eventFormData.start_time}</li>
-                    <li>End Time: {event.eventFormData.end_time}</li>
-                    <li>Dress Code: {event.eventFormData.dress_code}</li>
+                    <li>Venue: {event.eventFormData?.venue ?? "N/A"}</li>
+                    <li>Date: {event.eventFormData?.date ?? "N/A"}</li>
+                    <li>
+                      Start Time: {event.eventFormData?.start_time ?? "N/A"}
+                    </li>
+                    <li>End Time: {event.eventFormData?.end_time ?? "N/A"}</li>
+
+                    <li>
+                      Dress Code:{" "}
+                      {event.eventFormData?.dress_code ?? "Not specified"}
+                    </li>
                   </ul>
-                  <span className="text-lg font-semibold">Tickets</span>
+                  {/* <span className="text-lg font-semibold">Tickets</span>
                   <ul className="list-disc pl-5">
                     <li>Tickets: {event.ticketInfo.ticketType}</li>
                     {event.ticketInfo.categories.map((category, idx) => (
@@ -214,7 +224,7 @@ const Overview = () => {
                         {category.name}: {category.price}
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </div>
               </section>
               <section className="flex gap-3 w-full xsm:flex-col">

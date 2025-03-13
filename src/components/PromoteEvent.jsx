@@ -2,6 +2,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SuccessMessage from "./SuccessMessage";
 
 const PromoteEvent = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const PromoteEvent = () => {
     venue_capacity: "",
   });
 
+  const [success, setSuccess] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -26,12 +28,20 @@ const PromoteEvent = () => {
     e.preventDefault(); // Prevent the form from refreshing the page
     localStorage.setItem("eventFormData", JSON.stringify(formData)); // Save to localStorage
     console.log(formData);
-    alert("Form data saved successfully!");
-    navigate("/ticket-info");
+    setSuccess("Event data saved successfully!");
+    // alert("Form data saved successfully!");
+    navigate("/event-market");
   };
 
   return (
     <div className="container-md mt-[48px] p-0 min-h-screen">
+      {success && (
+        <SuccessMessage
+          message={success}
+          onClose={() => setSuccess(false)}
+          duration={3000} // Optional, defaults to 3000ms
+        />
+      )}
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#FFDE00]">Information</span>
       </span>
@@ -51,22 +61,6 @@ const PromoteEvent = () => {
               className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
-          <div className="flex flex-col gap-2 p-2 md:w-1/2">
-            <label htmlFor="description" className="text-white">
-              Event Description <span className="required">*</span>
-            </label>
-            <input
-              type="text"
-              required
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Provide a brief, engaging description of your event"
-              className="w-full p-2 rounded-lg bg-transparent border text-white"
-            />
-          </div>
-        </div>
-        <div className="flex md:flex-row xsm:flex-col w-full">
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
             <label htmlFor="state" className="text-white">
               State <span className="required">*</span>
@@ -105,6 +99,8 @@ const PromoteEvent = () => {
               className="w-full p-2 rounded-lg bg-transparent border"
             /> */}
           </div>
+        </div>
+        <div className="flex md:flex-row xsm:flex-col w-full">
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
             <label htmlFor="venue" className="text-white">
               Venue <span className="required">*</span>
@@ -116,6 +112,19 @@ const PromoteEvent = () => {
               value={formData.venue}
               onChange={handleChange}
               placeholder="Where is the event happening?"
+              className="w-full p-2 rounded-lg bg-transparent border text-white"
+            />
+          </div>
+          <div className="flex flex-col gap-2 p-2 md:w-1/2">
+            <label htmlFor="venue_capacity" className="text-white">
+              Venue Capacity:
+            </label>
+            <input
+              type="number"
+              name="venue_capacity"
+              value={formData.venue_capacity}
+              onChange={handleChange}
+              placeholder="What is the number of people that the venue can contain?"
               className="w-full p-2 rounded-lg bg-transparent border text-white"
             />
           </div>
@@ -151,11 +160,10 @@ const PromoteEvent = () => {
         <div className="flex md:flex-row xsm:flex-col w-full">
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
             <label htmlFor="end_time" className="text-white">
-              End Time <span className="required">*</span>
+              End Time
             </label>
             <input
               type="time"
-              required
               name="end_time"
               value={formData.end_time}
               onChange={handleChange}
@@ -164,12 +172,11 @@ const PromoteEvent = () => {
           </div>
           <div className="flex flex-col gap-2 p-2 md:w-1/2">
             <label htmlFor="dress_code" className="text-white">
-              Dress Code <span className="required">*</span>
+              Dress Code
             </label>
             <input
               type="text"
               name="dress_code"
-              required
               value={formData.dress_code}
               onChange={handleChange}
               placeholder="Is there a specific dress code? If yes, provide details."
@@ -177,17 +184,18 @@ const PromoteEvent = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-2 p-2 md:w-1/2">
-          <label htmlFor="venue_capacity" className="text-white">
-            Venue Capacity: <span className="required">*</span>
+
+        <div className="flex flex-col gap-2 p-2 w-full">
+          <label htmlFor="description" className="text-white">
+            Event Description <span className="required">*</span>
           </label>
-          <input
-            type="number"
-            name="venue_capacity"
-            value={formData.venue_capacity}
+          <textarea
+            type="text"
             required
+            name="description"
+            value={formData.description}
             onChange={handleChange}
-            placeholder="What is the number of people that the venue can contain?"
+            placeholder="Provide a brief, engaging description of your event"
             className="w-full p-2 rounded-lg bg-transparent border text-white"
           />
         </div>
