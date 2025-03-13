@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
+import Loader from "./Loader";
 
 const LagosToday = () => {
   const [events, setEvents] = useState([]);
   const [openTicket, setOpenTicket] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
 
   const handleFetchEvents = async () => {
+    setIsLoading(true);
     try {
       const response = await fetchEvents();
       if (response.success) {
@@ -16,7 +19,9 @@ const LagosToday = () => {
         //find events with eventMarket.eventFormData.state === "Lagos"
 
         const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state === "Lagos"
+          (event) =>
+            event.status === "uploaded" &&
+            event.eventFormData.state === "Within Lagos"
         );
         console.log(featuredEvents);
         setEvents(featuredEvents || []);
@@ -25,6 +30,8 @@ const LagosToday = () => {
       }
     } catch (error) {
       console.error("Error fetching events:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -37,6 +44,7 @@ const LagosToday = () => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
   };
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex flex-col my-6 w-full md:px-4 container">
@@ -92,8 +100,15 @@ const LagosToday = () => {
                 <button
                   className="btn btn-light w-full"
                   onClick={() => handleTicketSale(event.id)}
+                  disabled={event.ticketInfo.categories.some(
+                    (category) => category.quantity === 0
+                  )}
                 >
-                  Buy Ticket
+                  {event.ticketInfo.categories.some(
+                    (category) => category.quantity === 0
+                  )
+                    ? "Buy Ticket"
+                    : "Buy Ticket"}
                 </button>
               </div>
             </div>

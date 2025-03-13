@@ -4,13 +4,16 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
+import Loader from "./Loader";
 
 const ExploreLagos = () => {
   const [events, setEvents] = useState([]);
   const [openTicket, setOpenTicket] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFetchEvents = async () => {
+    setIsLoading(true);
     try {
       const response = await fetchEvents();
       if (response.success) {
@@ -18,7 +21,9 @@ const ExploreLagos = () => {
         //find events with eventMarket.eventFormData.state === "Lagos"
 
         const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state === "Lagos"
+          (event) =>
+            event.status === "uploaded" &&
+            event.eventFormData.state === "Within Lagos"
         );
         console.log(featuredEvents);
         setEvents(featuredEvents || []);
@@ -27,6 +32,8 @@ const ExploreLagos = () => {
       }
     } catch (error) {
       console.error("Error fetching events:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,9 +46,10 @@ const ExploreLagos = () => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
   };
+  if (isLoading) return <Loader />;
 
   return (
-    <div className="mt-16 container">
+    <div className="mt-16 container !min-h-screen">
       <div className="w-full flex flex-col md:items-center md:flex-row gap-[48px] lg:gap-0 container home-suggest mb-[50px]">
         <img
           src={lagosImg}
@@ -55,9 +63,12 @@ const ExploreLagos = () => {
             cultural landmarks to the hottest nightlife spots, find your next
             adventure in the city that never sleeps.
           </span>
-          <button className="btn btn-light w-fit md:px-[42px]">
+          <Link
+            to="/discover-lagos"
+            className="btn btn-light w-fit md:px-[42px]"
+          >
             Discover Lagos
-          </button>
+          </Link>
         </section>
       </div>{" "}
       <div className="flex gap-[48px] flex-wrap justify-center  mt-16">

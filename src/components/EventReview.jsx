@@ -21,19 +21,6 @@ const EventReview = () => {
   const [userVerified, setUserVerified] = useState(false); // Track if the user email is verified
 
   const navigate = useNavigate();
-  const event = {
-    id: 4,
-    image: eventFlyer,
-    date: "20 May, 2024",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet nulla auctor, vestibulum.",
-    ticket: "#5000",
-    venue: "Tribe Lagos",
-    time: "12:00 PM - 3:00 PM",
-    title: "GAMES NIGHT",
-    startTime: "7:00 PM",
-    endTime: "1:00 AM",
-  };
 
   useEffect(() => {
     const eventMarket = JSON.parse(localStorage.getItem("eventMarket") || "{}");
@@ -86,13 +73,14 @@ const EventReview = () => {
         // Upload event details to Firestore, including email
         await addDoc(collection(db, "events"), {
           ...eventDetails,
+          status: "pending",
           email, // Make sure email is added here
           uploadedAt: new Date(), // Add a timestamp
         });
-        setUserVerified(false); // Reset the verification status
+        // setUserVerified(false); // Reset the verification status
         alert("Event details successfully uploaded to Firestore.");
         console.log("Event details successfully uploaded to Firestore.");
-        navigate("/home"); // Redirect to the home page
+        navigate("/"); // Redirect to the home page
       } catch (error) {
         console.error("Error uploading event details:", error);
       }
@@ -122,7 +110,9 @@ const EventReview = () => {
         if (existingUser.verificationStatus) {
           console.log("User email already verified!");
           alert("Your email is already verified.");
-          window.location.reload(); // Reload the page to reflect the changes
+          setEmailReg(false);
+          setUserVerified(true);
+          // window.location.reload(); // Reload the page to reflect the changes
 
           return; // Don't send another verification email if already verified
         } else {
@@ -172,7 +162,7 @@ const EventReview = () => {
   };
 
   return (
-    <div className="container-md mt-[48px] p-0">
+    <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#FFDE00]">Review</span>
       </span>
@@ -219,14 +209,14 @@ const EventReview = () => {
           <span className="w-[402px] xs:w-full">
             <img
               src={eventDetails.eventMarket.imagePreview || eventFlyer}
-              alt={`${event.title} Flyer`}
+              alt={`${eventDetails.eventFormData.name} Flyer`}
               className="w-full rounded-xl border border-white"
             />
           </span>
           <div className="flex flex-col gap-3 text-white event-details xsm:w-full">
             <h3>{eventDetails.eventFormData.name}</h3>
             <p>{eventDetails.eventFormData.description}</p>
-            <h3>Details</h3>
+            <h3 className="text-xl">Details</h3>
             <ul>
               <li>Venue: {eventDetails.eventFormData.venue}</li>
               <li>Date: {eventDetails.eventFormData.date}</li>

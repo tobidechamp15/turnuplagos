@@ -1,59 +1,104 @@
 import React from "react";
 import Newsletter from "./Newsletter";
 import Footer from "./Footer";
+import aboutExplore from "../assets/aboutExplore.svg";
+import aboutBeyond from "../assets/aboutBeyond.svg";
 
 const About = () => {
   return (
-    <div className="flex flex-col gap-3 mt-4 min-h-screen container-md about-page p-0">
-      <article className="text-base text-white leading-relaxed">
-        When you’re thinking of things to do after a hard day at work or during
-        the weekend, you would probably phone a friend for suggestions, right?
-        But as we all know, friends may not know every social event or
-        recreational activity going on – That’s where <strong>WE</strong> come
-        in!
-      </article>
+    <div className="flex w-full flex-col">
+      <div className="flex flex-col items-center gap-3 mt-4 min-h-screen !container container-lg about-page xsm:px-3">
+        <div className="xsm:text-[16px] text-white text-[64px] font-semibold flex flex-col  text-wrap text-center">
+          <span>Where Every Day Feels Like a Party!</span>
+        </div>
+        <span className="text-[#FFFFFFB2] text-[12px] md:text-[24px] xsm:max-w-[] text-center">
+          From epic events to must-visit hot spots, let’s turn up the vibe and
+          explore Lagos like never before.
+        </span>
 
-      <map className="text-3xl text-white xsm:text-[24px]">
-        If you want to <map className="text-[#FFDE00]">Explore Lagos</map>
-      </map>
+        <div className="flex flex-col gap-3 mt-4">
+          <span className="text-[24px] text-white">
+            Explore Lagos Like Never Before!!!
+          </span>
+          <section className="flex about-wrapping flex-col md:flex-row gap-3">
+            <img src={aboutExplore} alt="" className="obj" />
+            <section className="flex flex-col md:max-w-[731px] text-white text-sm gap-3 justify-around">
+              <span>
+                We’re your ultimate go-to source for every social event,
+                recreational activity, and memorable experience happening in
+                Lagos. Whether you're a local or a visitor, we bring you the
+                most comprehensive guide to everything Lagos has to offer. From
+                electrifying concerts and thought-provoking art exhibitions to
+                laid-back outdoor hangout spots and hidden foodie gems, we’ve
+                got it all covered. Stay effortlessly updated on upcoming
+                events, newly launched venues, exciting places to unwind, and
+                exclusive happenings you won’t want to miss. With our help,
+                you’ll never have to stay home unless you want to!
+              </span>
+              <span>
+                Lagos is a vibrant cosmopolitan city bursting with life and
+                energy. Picture yourself indulging in diverse and mouth-watering
+                cuisines at local food markets, discovering contemporary art at
+                world-class galleries, or simply lounging on stunning beaches
+                with a refreshing cocktail in hand. The city is full of trendy
+                hot spots, cultural hubs, and lively entertainment venues that
+                truly capture the essence of Lagos' dynamic spirit. From secret
+                rooftop bars to iconic nightlife spots, every corner of the city
+                offers something new and exciting. We make it easy for you to
+                navigate through the best experiences Lagos has to offer,
+                ensuring you never miss out on the pulse of the city. Whether
+                you’re looking for a casual night out or a weekend adventure,
+                we’ve got you covered with all the latest event updates, venue
+                openings, and things to do to make your time in Lagos
+                unforgettable.
+              </span>
+            </section>
+          </section>
+        </div>
+        <div className="flex flex-col gap-3 mt-4">
+          <span className="text-[24px] text-white">
+            Explore Lagos Like Never Before!!!
+          </span>
+          <section className="flex about-wrapping flex-col md:flex-row gap-3">
+            <img src={aboutBeyond} alt="" className="obj" />
+            <section className="flex flex-col md:max-w-[731px] text-white text-sm gap-3 justify-around">
+              <span>
+                Looking to expand your horizons and explore beyond Lagos? We’ve
+                got you covered with the latest events, activities, and
+                experiences happening in Abuja, Port Harcourt, Calabar, and
+                beyond. Whether you’re a local resident or a curious traveler,
+                we bring you the most up-to-date information on the diverse
+                range of events happening across Nigeria's other vibrant cities.
+                From the cultural richness of Abuja to the lively atmosphere of
+                Port Harcourt and the scenic beauty of Calabar, each city offers
+                unique experiences waiting to be discovered.
+              </span>
+              <span>
+                Stay tuned for exciting updates on events hosted by Nigerian
+                stars, influencers, and thought leaders, bringing you closer to
+                the dynamic world of entertainment, fashion, and culture.
+                Whether you're seeking to be part of a cultural renaissance in
+                Port Harcourt, an artsy retreat in Calabar, or a groundbreaking
+                event in Abuja, we provide all the details you need to
+                experience the best of Nigerian life, both locally and
+                internationally. Never miss out on the opportunity to be part of
+                something special – with us, the best events in Nigerian states
+                and beyond are just a tap away!
+              </span>
+            </section>
+          </section>
+        </div>
 
-      <article className="text-base text-white leading-relaxed">
-        We hunt for every social event or recreational activity happening in the
-        city of Lagos and make all that information available to{" "}
-        <strong>YOU</strong> in one place. We keep informing you about upcoming
-        events and newly launched outdoor hangout spots, providing you with so
-        many options that you’ll never have to stay at home if you don’t want
-        to. Lagos is a cosmopolitan city bursting with diverse cultures,
-        mouthwatering cuisine, long beaches, and a plethora of trendy venues for
-        you to explore.
-      </article>
-
-      <map className="text-3xl text-white xsm:text-[24px] ">
-        If you prepared to go
-        <map className="text-[#FFDE00]"> Beyond Lagos</map>
-      </map>
-
-      <article className="text-base text-white leading-relaxed">
-        We also provide information on events and recreational hot spots in
-        Abuja, Port Harcourt, and Calabar. And we don’t stop there – we also
-        give you the heads up on events by Nigerian personalities abroad,
-        notably in the US, Europe, and South Africa.
-      </article>
-
-      <article className="text-base text-white leading-relaxed">
-        Oh, and we almost forgot to mention that all the information we provide
-        to you is absolutely <strong>FREE!</strong> If you would like to receive
-        emails on exclusive events coming soon in Lagos, click here to sign up
-        for our free newsletter.
-      </article>
-
-      <article className="text-base text-white leading-relaxed">
-        So whether you want to know where to swim, where to eat local or
-        continental food, where to attend a motivational seminar, where to do
-        karaoke, where to learn to dance Salsa, or where to attend a music
-        concert, we hope you keep visiting so we can show you where to Turn Up!
-      </article>
-
+        <div className="flex flex-col gap-5 mt-4 text-white  container-md">
+          <span className="text-[24px]">And the Best Part?</span>
+          <span className="text-[16px] font-normal">
+            All this information is absolutely FREE! Yes, you read that right.
+            Plus, you can stay in the loop with our exclusive email updates.
+            Sign up for our newsletter to be the first to know about can’t-miss
+            events in Lagos and beyond.
+          </span>
+        </div>
+      </div>
       <Newsletter />
       <Footer />
     </div>

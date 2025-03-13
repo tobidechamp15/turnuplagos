@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
+import Loader from "./Loader";
 
 const AllBeyondLagos = () => {
   const [events, setEvents] = useState([]);
   const [openTicket, setOpenTicket] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const handleFetchEvents = async () => {
+    setIsLoading(true);
     try {
       const response = await fetchEvents();
       if (response.success) {
@@ -15,7 +18,9 @@ const AllBeyondLagos = () => {
         //find events with eventMarket.eventFormData.state is not "Lagos"
 
         const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state !== "Lagos"
+          (event) =>
+            event.status === "uploaded" &&
+            event.eventFormData.state === "Beyond Lagos"
         );
         console.log(featuredEvents);
         setEvents(featuredEvents || []);
@@ -24,6 +29,8 @@ const AllBeyondLagos = () => {
       }
     } catch (error) {
       console.error("Error fetching events:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -35,9 +42,10 @@ const AllBeyondLagos = () => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
   };
+  if (isLoading) return <Loader />;
 
   return (
-    <div className="text-[#FFDE00]  container">
+    <div className="text-[#FFDE00]  container min-h-screen">
       <div className=" md:text-[32px]">Events</div>{" "}
       <div className="flex gap-[48px] flex-wrap justify-center ">
         {events.map((event) => (

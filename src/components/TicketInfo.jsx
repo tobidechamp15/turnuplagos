@@ -4,17 +4,21 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const TicketInfo = () => {
-  const [ticketType, setTicketType] = useState("Free");
+  const [ticketType, setTicketType] = useState(null);
   const [categories, setCategories] = useState([
     { name: "", price: "", quantity: "" },
   ]);
+  const [quantity, setQuantity] = useState("");
   const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = {
       ticketType,
-      categories: ticketType === "Paid" ? categories : [],
+      categories:
+        ticketType === "Paid"
+          ? categories
+          : [{ name: "Free Ticket", quantity }],
     };
     localStorage.setItem("ticketInfo", JSON.stringify(formData));
     navigate("/event-market");
@@ -37,7 +41,7 @@ const TicketInfo = () => {
   };
 
   return (
-    <div className="container-md mt-[48px] p-0">
+    <div className="container-md mt-[48px] p-0 min-h-screen">
       <span className="text-[32px] text-white mb-6">
         Event <span className=" text-[#FFDE00] ">Information</span>
       </span>
@@ -52,15 +56,17 @@ const TicketInfo = () => {
               name="ticket_type"
               id="ticket_type"
               onChange={(e) => setTicketType(e.target.value)}
-              className="w-full p-2 rounded-lg !bg-transparent border"
+              className="w-full p-2 rounded-lg !bg-transparent border  text-white"
             >
-              <option value="" className="!bg-transparent" disabled>
+              <option value="" className="!bg-transparent text-black">
                 Select Ticket Type
               </option>
-              <option value="Free" className="!bg-transparent">
+              <option value="Free" className="!bg-transparent text-black">
                 Free
               </option>
-              <option value="Paid">Paid</option>
+              <option value="Paid" className="text-black">
+                Paid
+              </option>
             </select>
           </div>
           {ticketType === "Paid" && (
@@ -97,7 +103,7 @@ const TicketInfo = () => {
                     onChange={(e) =>
                       handleCategoryChange(index, "name", e.target.value)
                     }
-                    className="w-full p-2 rounded-lg bg-transparent border"
+                    className="w-full p-2 rounded-lg bg-transparent border text-white"
                   />
                 </div>
                 <div className="flex flex-col gap-2  md:w-1/2 ">
@@ -112,7 +118,7 @@ const TicketInfo = () => {
                     onChange={(e) =>
                       handleCategoryChange(index, "price", e.target.value)
                     }
-                    className="w-full p-2 rounded-lg bg-transparent border"
+                    className="w-full p-2 rounded-lg bg-transparent border text-white"
                   />
                 </div>
                 <div className="flex flex-col gap-2  md:w-1/2 ">
@@ -127,14 +133,30 @@ const TicketInfo = () => {
                     onChange={(e) =>
                       handleCategoryChange(index, "quantity", e.target.value)
                     }
-                    className="w-full p-2 rounded-lg bg-transparent border"
+                    className="w-full p-2 rounded-lg bg-transparent border text-white"
                   />
                 </div>
               </div>
             ))}
           </div>
         )}
-
+        {ticketType === "Free" && (
+          <div>
+            <div className="flex flex-col gap-2  md:w-1/ w-full ">
+              <label htmlFor="ticket_type" className="text-white">
+                Quantity <span className="required">*</span>
+              </label>
+              <input
+                type="number"
+                name="quantity"
+                value={quantity}
+                id=""
+                onChange={(e) => setQuantity(e.target.value)}
+                className="w-full p-2 rounded-lg bg-transparent border text-white"
+              />
+            </div>
+          </div>
+        )}
         {ticketType === "Free" && (
           <div className="mt-4">
             <button className="btn btn-light w-fit" type="submit">

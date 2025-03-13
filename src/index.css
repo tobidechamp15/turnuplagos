@@ -173,8 +173,101 @@ a {
     color: #ffffff;
   }
 }
+.home-sugg {
+  background-image: url("./assets/bgImg.svg");
+
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+  /* background-position: bottom; */
+  /* background-size: 100%; */
+  background-position: center;
+}
+.ticket-bg {
+  background: linear-gradient(#ffffff, #ffdd0078), url("./assets/ticketBg.svg");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: darken;
+}
+.custom-ticket p {
+  font-family: "Avenir";
+  font-style: italic;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 136.5%;
+  /* or 38px */
+  letter-spacing: -0.025em;
+
+  color: #000000;
+}
+.custom-ticket span {
+  font-family: "Avenir";
+  font-style: italic;
+  font-weight: 350;
+  font-size: 16px;
+  line-height: 136.5%;
+  /* identical to box height, or 22px */
+  letter-spacing: -0.025em;
+
+  color: #000000;
+}
 @media (min-width: 1025px) and (max-width: 1279px) {
   .home-suggest {
     gap: 30px !important;
+  }
+}
+
+/* From Uiverse.io by tobiloba_3472 */
+.loading-user {
+  --speed-of-animation: 0.9s;
+  --gap: 6px;
+  --first-color: #ffffff;
+  --second-color: #ffffff;
+  --third-color: #ffffff;
+  --fourth-color: #ffffff;
+  --fifth-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  gap: 6px;
+  height: 100px;
+}
+
+.loading-user span {
+  width: 4px;
+  height: 50px;
+  background: var(--first-color);
+  animation: scale var(--speed-of-animation) ease-in-out infinite;
+}
+
+.loading-user span:nth-child(2) {
+  background: var(--second-color);
+  animation-delay: -0.8s;
+}
+
+.loading-user span:nth-child(3) {
+  background: var(--third-color);
+  animation-delay: -0.7s;
+}
+
+.loading-user span:nth-child(4) {
+  background: var(--fourth-color);
+  animation-delay: -0.6s;
+}
+
+.loading-user span:nth-child(5) {
+  background: var(--fifth-color);
+  animation-delay: -0.5s;
+}
+
+@keyframes scale {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.05);
+  }
+
+  20% {
+    transform: scaleY(1);
   }
 }

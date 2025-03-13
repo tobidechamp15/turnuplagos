@@ -19,7 +19,9 @@ const Home = () => {
       if (response.success) {
         // Find events with eventMarket.featureEvent === "Yes"
         const featuredEvents = response.events.filter(
-          (event) => event.eventMarket.featureEvent === "yes"
+          (event) =>
+            event.eventMarket.featureEvent === "yes" &&
+            event.status === "uploaded"
         );
         setEvents(featuredEvents || []);
       } else {
@@ -47,16 +49,12 @@ const Home = () => {
     <div className="flex flex-col items-center">
       <Banner />
       {/* Hero Section */}
-      <div className="hero-text flex flex-col mt-16 text-wrap text-center">
-        <span>Where Every Day Feels Like a Party!</span>
-      </div>
-      <span className="hero-subtext xsm:max-w-[340px] text-center">
-        From epic events to must-visit hot spots, let’s turn up the vibe and
-        explore Lagos like never before.
-      </span>
 
+      <div className="text-[32px] text-white mt-6 mb--2 flex gap-1 items-start container w-full">
+        Featured <span className="text-[#FFDE00]">Events</span>
+      </div>
       {/* Event Carousel */}
-      <section className="flex flex-col justify-around my-[40px] w-full container">
+      <section className="flex flex-col justify-around mt-[16px] mb-[40px] w-full container">
         <section className="flex justify-around items-center mt-2">
           {/* Left Arrow */}
 
@@ -68,7 +66,7 @@ const Home = () => {
             {events.map((event) => (
               <div
                 key={event.id}
-                className="flex flex-col xsm:gap-6 xsm:min-w-[300px] md:min-w-[350px] md:max-w-[350px] xsm:max-w-[300px] md:gap-[32px] border border-gray-600 items-center justify-center rounded-xl p-[19px] shrink-0"
+                className="flex flex-col xsm:gap-6 xsm:min-w-[300px] md:min-w-[350px] md:max-w-[350px] xsm:max-w-[300px] md:gap-[32px] border border-gray-600 items-center justify-between rounded-xl p-[19px] shrink-0"
               >
                 {/* Event Header */}
                 <div className="flex justify-between w-full">
@@ -87,7 +85,7 @@ const Home = () => {
                 <img
                   src={event.eventMarket.imagePreview || "default-image.jpg"}
                   alt={event.eventFormData.name}
-                  className="w-full max-h-[300px] object-cover rounded-lg"
+                  className="w-full max-h-[300px] min-h-[300px] object-cover rounded-lg"
                 />
 
                 {/* Event Details */}
@@ -123,9 +121,12 @@ const Home = () => {
             cultural landmarks to the hottest nightlife spots, find your next
             adventure in the city that never sleeps.
           </span>
-          <button className="btn btn-light w-fit md:px-[42px]">
+          <Link
+            to="/discover-lagos"
+            className="btn btn-light w-fit md:px-[42px]"
+          >
             Discover Lagos
-          </button>
+          </Link>
         </section>
       </div>
 

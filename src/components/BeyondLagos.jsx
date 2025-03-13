@@ -2,42 +2,47 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchEvents } from "../utils/eventsFetched";
 import TicketSale from "./TicketSale";
+import Loader from "./Loader";
 
 const BeyondLagos = () => {
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [openTicket, setOpenTicket] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null); // State to track selected event ID
-
-  const handleFetchEvents = async () => {
-    try {
-      const response = await fetchEvents();
-      if (response.success) {
-        console.log(response.events);
-        //find events with eventMarket.eventFormData.state is not "Lagos"
-
-        const featuredEvents = response.events.filter(
-          (event) => event.eventFormData.state !== "Lagos"
-        );
-        console.log(featuredEvents);
-        setEvents(featuredEvents || []);
-      } else {
-        console.error("Failed to fetch events:", response.error);
-      }
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    }
-  };
-
-  // Adjust itemsPerPage based on screen size
   useEffect(() => {
-    handleFetchEvents();
-  }, []);
+    const fetchEventsData = async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await fetchEvents();
+        if (response.success) {
+          const featuredEvents = response.events.filter(
+            (event) =>
+              event.status === "uploaded" &&
+              event.eventFormData.state === "Beyond Lagos"
+          );
+          setEvents(featuredEvents || []);
+          console.log(featuredEvents);
+        } else {
+          console.error("Failed to fetch events:", response.error);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEventsData();
+  }, []); // No dependencies since everything is contained within the effect
   const handleTicketSale = (id) => {
     setSelectedEventId(id); // Set the selected event ID
     setOpenTicket(true); // Open the TicketSale component
   };
+  if (isLoading) return <Loader />;
+
   return (
-    <div className="flex flex-col my-6 w-full md:px-4 container">
+    <div className="flex flex-col py-6 w-full md:px-4 container">
       {/* Title */}
       <span className="text-[32px] text-[#FFDE00] mb-6">
         Beyond <span className="text-white">Lagos</span>
@@ -45,7 +50,7 @@ const BeyondLagos = () => {
 
       {/* Event Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {events.slice(0, 4).map((event) => (
+        {events?.slice(0, 4).map((event) => (
           <div
             key={event.id}
             className="flex flex-col gap-3 md:flex-row rounded-lg shadow-md overflow-hidden"

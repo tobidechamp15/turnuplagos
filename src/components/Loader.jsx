@@ -1,7 +1,15 @@
 import React from "react";
 
 const Loader = () => {
-  return <div>Loader</div>;
+  return (
+    <div className="loading-user">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  );
 };
 
 export default Loader;

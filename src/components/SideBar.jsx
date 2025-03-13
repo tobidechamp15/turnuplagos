@@ -6,10 +6,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const SideBar = ({ onClose }) => {
   const navLinks = [
-    { href: "/home", label: "Home" },
+    { href: "/", label: "Home" },
     { href: "/about", label: "About TUL" },
     { href: "/exploreLagos", label: "Explore Lagos" },
     { href: "/beyondLagos", label: "Beyond Lagos" },
+    { href: "/manage-ticket", label: "ManageTickets" },
     { href: "/contact", label: "Contact" },
   ];
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const SideBar = ({ onClose }) => {
           className="btn btn-outline-light w-full"
           onClick={handlePromoteEvent}
         >
-          Promote an Event
+          Promote With us
         </button>
       </div>
     </div>
