@@ -25,6 +25,9 @@ const EditProfileForm = ({ user, onSave, admin, avatarUrls }) => {
   const validateForm = () => {
     if (!firstName.trim() || !lastName.trim()) {
       setError("All fields except photo URL are required.");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
       return false;
     }
     return true;
@@ -42,16 +45,22 @@ const EditProfileForm = ({ user, onSave, admin, avatarUrls }) => {
 
       if (response.success) {
         setSuccessMessage("Profile updated successfully!");
-        setError("");
+        setError(null);
         onSave();
         window.location.reload();
       } else {
         setError("Failed to update profile.");
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
         setSuccessMessage("");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
       setError("An error occurred while updating your profile.");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     } finally {
       setIsLoading(false);
     }

@@ -14,12 +14,15 @@ import card1 from "../../assets/card1.svg";
 import card2 from "../../assets/card2.svg";
 import card3 from "../../assets/card3.svg";
 import card4 from "../../assets/card4.svg";
+import ErrorMessage from "../ErrorMessage";
+import SuccessMessage from "../SuccessMessage";
 
 const Overview = () => {
   // Fetch events
   const [banner, setBanner] = useState([]);
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [success, setSuccess] = useState(null);
   const itemsPerPage = 10;
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -28,7 +31,7 @@ const Overview = () => {
 
   const handleFetchBanners = async () => {
     setIsLoading(true);
-    setErrorMessage("");
+    setErrorMessage(null);
     try {
       const response = await fetchBanner();
       if (response.success) {
@@ -36,9 +39,15 @@ const Overview = () => {
         setBanner(response.banner || []);
       } else {
         setErrorMessage("Failed to fetch banners.");
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 2000);
       }
     } catch (error) {
       setErrorMessage("Error fetching banners.");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000);
       console.error("Error fetching banners:", error);
     } finally {
       setIsLoading(false);
@@ -95,10 +104,14 @@ const Overview = () => {
     const result = await deleteEvent(id);
 
     if (result.success) {
+      setSuccess("Event deleted successfully");
       console.log("Event deleted successfully!");
       window.location.reload();
     } else {
-      alert("Failed to delete event:");
+      setErrorMessage("Failed to delete event:");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000);
     }
   };
 
@@ -108,7 +121,10 @@ const Overview = () => {
       console.log("Banner deleted successfully!");
       window.location.reload();
     } else {
-      alert("Failed to delete banner:");
+      setErrorMessage("Failed to delete banner:");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000);
     }
   };
 
@@ -123,7 +139,8 @@ const Overview = () => {
         <img src={card4} alt="" />
       </section>
       <div className="pending-section">
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        {errorMessage && <ErrorMessage message={errorMessage} />}
+        {success && <SuccessMessage message={success} />}
         <span className="text-[#4A5154]">Pending</span>
         {banner.length > 0 ? (
           banner

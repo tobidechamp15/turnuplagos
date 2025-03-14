@@ -88,15 +88,16 @@ const ManageEvent = () => {
                       <li>End Time: {event.eventFormData.end_time}</li>
                       <li>Dress Code: {event.eventFormData.dress_code}</li>
                     </ul>
+                    {/*
                     <span className="text-lg font-semibold">Tickets</span>
-                    <ul className="list-disc pl-5">
+                       <ul className="list-disc pl-5">
                       <li>Tickets: {event.ticketInfo.ticketType}</li>
                       {event.ticketInfo.categories.map((category, idx) => (
                         <li key={idx}>
                           {category.name}: {category.price}
                         </li>
                       ))}
-                    </ul>
+                    </ul> */}
                   </div>
                 </section>
                 <Link

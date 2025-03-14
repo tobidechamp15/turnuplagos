@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { updateTicket } from "../../utils/eventsFetched";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faX } from "@fortawesome/free-solid-svg-icons";
+import SuccessMessage from "../SuccessMessage";
+import ErrorMessage from "../ErrorMessage";
 
 const EditTicket = ({ ticketInfo, id, setEditTicketActive }) => {
   const [updatedTicket, setUpdatedTicket] = useState({
@@ -10,6 +12,8 @@ const EditTicket = ({ ticketInfo, id, setEditTicketActive }) => {
       ticketInfo.ticketType === "Paid" ? ticketInfo.categories || [] : [],
   });
 
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   // Handle category changes
   const handleCategoryChange = (e, index) => {
     const { name, value } = e.target;
@@ -32,12 +36,19 @@ const EditTicket = ({ ticketInfo, id, setEditTicketActive }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await updateTicket(updatedTicket, id);
-    alert(
-      response.success
-        ? "Ticket updated successfully!"
-        : `Failed to update ticket: ${response.error}`
-    );
-    window.location.reload();
+    if (!response.success) {
+      setError("Failed to update ticket");
+    } else {
+      setSuccess("Ticket updated successfully!");
+      window.location.reload();
+    }
+
+    // alert(
+    //   response.success
+    //     ? "Ticket updated successfully!"
+    //     : `Failed to update ticket: ${response.error}`
+    // );
+    // window.location.reload();
   };
 
   // Add new category
@@ -61,6 +72,8 @@ const EditTicket = ({ ticketInfo, id, setEditTicketActive }) => {
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center top-0 xsm:top-[78px] absolute left-0 p-4 custom-modal">
+      {error && <ErrorMessage message={error} />}
+      {success && <SuccessMessage message={success} />}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col h-full gap-6 p-6 border border-gray-300 rounded-lg bg-white shadow-lg relative"

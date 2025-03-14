@@ -23,7 +23,7 @@ const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [avatarUrls, setAvatarUrls] = useState([]);
@@ -42,7 +42,9 @@ const Signup = () => {
       if (!email.endsWith("@turnuplagos.com")) {
         setError("Provided email is not a required admin email");
         setIsLoading(false);
-        return;
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
       }
 
       // Check if the email belongs to an existing admin
@@ -54,6 +56,9 @@ const Signup = () => {
         if (adminLogged) {
           setIsAdmin(true);
           setError("Admin account already exists. Please sign in.");
+          setTimeout(() => {
+            setError(null);
+          }, 2000);
           setIsLoading(false);
           return;
         }
@@ -74,7 +79,9 @@ const Signup = () => {
       setIsLoading(false);
       setError(
         "This email is already in use. Please sign in or choose a different email to continue."
-      );
+      );setTimeout(() => {
+        setError(null);
+      }, 2000);
       console.error(err);
     } finally {
       setIsLoading(false);

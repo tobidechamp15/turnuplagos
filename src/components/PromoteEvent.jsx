@@ -42,9 +42,7 @@ const PromoteEvent = () => {
           duration={3000} // Optional, defaults to 3000ms
         />
       )}
-      <span className="text-[32px] text-white mb-6">
-        Event <span className="text-[#FFDE00]">Information</span>
-      </span>
+      <span className="text-[32px] text-white mb-6">Event Information</span>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 my-3">
         <div className="flex md:flex-row xsm:flex-col w-full">
           <div className="flex flex-col gap-2 p-2 md:w-1/2">

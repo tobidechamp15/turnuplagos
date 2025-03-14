@@ -327,7 +327,7 @@ const AdminUploadBanner = () => {
         )}
         {userVerified && (
           <button className="btn btn-primary w-fit" onClick={handleUpload}>
-            Upload Event to Firestore
+            Upload Event
           </button>
         )}
       </section>

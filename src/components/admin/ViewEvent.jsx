@@ -9,6 +9,8 @@ import EditTicket from "./EditTicket";
 import { deleteEvent } from "../../utils/eventsFetched.js";
 import ConfirmDelete from "./ConfirmDelete.jsx";
 import AdminLoader from "./AdminLoader.jsx";
+import ErrorMessage from "../ErrorMessage.jsx";
+import SuccessMessage from "../SuccessMessage.jsx";
 
 const ViewEvent = () => {
   const { id } = useParams();
@@ -20,15 +22,19 @@ const ViewEvent = () => {
   const [editEventActive, setEditEventActive] = useState(false);
   const [editTicketActive, setEditTicketActive] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [success, setSuccess] = useState(null);
 
   const handleDeleteEvent = async () => {
     const result = await deleteEvent(event);
 
     if (result.success) {
-      console.log("Event deleted successfully!");
+      setSuccess("Event deleted successfully!");
       window.location.href = "/dashboard/manage-event"; // Redirect to the manage event page
     } else {
-      alert("Failed to delete event:");
+      setError("Failed to delete event:");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   };
 
@@ -41,6 +47,9 @@ const ViewEvent = () => {
         console.log(response.event); // Logging the event after fetching it
       } else {
         setError(response.error);
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
       }
       setLoading(false);
     };
@@ -50,10 +59,10 @@ const ViewEvent = () => {
 
   if (loading) return <AdminLoader />;
 
-  if (error) return <div>Error: {error}</div>;
-
   return (
     <div className="container-md ">
+      {error && <ErrorMessage message={error} />}
+      {success && <SuccessMessage message={success} />}
       <div className="flex justify-between admin-top py-3 rounded-xl text-center items-center xsm:px-2  p-8">
         <Link to="/dashboard/manage-event">
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -84,7 +93,7 @@ const ViewEvent = () => {
               <li>End Time: {event.eventFormData.end_time}</li>
               <li>Dress Code: {event.eventFormData.dress_code}</li>
             </ul>
-            <span className="text-lg font-semibold">Tickets</span>
+            {/* <span className="text-lg font-semibold">Tickets</span>
             <ul className="list-disc pl-5">
               <li>Tickets: {event.ticketInfo.ticketType}</li>
               {event.ticketInfo.categories.map((category, index) => (
@@ -92,7 +101,7 @@ const ViewEvent = () => {
                   {category.name}: {category.price}
                 </li>
               ))}
-            </ul>
+            </ul> */}
 
             {editEventActive && (
               <EditEvent
@@ -124,12 +133,12 @@ const ViewEvent = () => {
         >
           Edit Event Information
         </button>
-        <button
+        {/* <button
           onClick={() => setEditTicketActive(true)}
           className="btn btn-outline-secondary md:w-full"
         >
           Edit Ticket Information
-        </button>
+        </button> */}
         <button
           className="btn btn-danger md:w-full"
           onClick={() => setDeleteConfirmation(true)}

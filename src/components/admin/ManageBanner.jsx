@@ -38,9 +38,15 @@ const ManageBanner = () => {
         setBanner(response.banner || []);
       } else {
         setErrorMessage("Failed to fetch banners.");
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 2000);
       }
     } catch (error) {
       setErrorMessage("Error fetching banners.");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000);
       console.error("Error fetching banners:", error);
     } finally {
       setIsLoading(false);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import eventFlyer from "../assets/eventFlyer.svg";
 import { db } from "./firebase/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  onAuthStateChanged,
+  // onAuthStateChanged,
 } from "firebase/auth";
 import { query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -35,36 +35,36 @@ const EventReview = () => {
     console.log("Event Details:", details);
 
     // Monitor user's authentication state and email verification status
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("object");
-      if (user) {
-        setUserVerified(user.emailVerified);
-        // If the email is verified, update Firestore
-        if (user.emailVerified) {
-          updateUserVerificationStatus(user);
-        }
-      }
-    });
+    // const auth = getAuth();
+    // const unsubscribe = onAuthStateChanged(auth, (user) => {
+    //   console.log("object");
+    // if (user) {
+    //   setUserVerified(user.emailVerified);
+    //   // If the email is verified, update Firestore
+    //   if (user.emailVerified) {
+    //     updateUserVerificationStatus(user);
+    //   }
+    // }
+    // });
 
-    return () => unsubscribe(); // Cleanup listener on component unmount
+    // return () => unsubscribe(); // Cleanup listener on component unmount
   }, []);
 
   // Function to update the user verification status in Firestore
-  const updateUserVerificationStatus = async (user) => {
-    const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
+  // const updateUserVerificationStatus = async (user) => {
+  //   const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
 
-    // Update the user's verification status in Firestore
-    try {
-      await updateDoc(userDocRef, {
-        verificationStatus: user.emailVerified, // Update verificationStatus
-      });
-      console.log("User verification status updated in Firestore.");
-      // window.location.reload(); // Reload the page to reflect the changes
-    } catch (error) {
-      console.error("Error updating verification status:", error);
-    }
-  };
+  //   // Update the user's verification status in Firestore
+  //   try {
+  //     await updateDoc(userDocRef, {
+  //       verificationStatus: user.emailVerified, // Update verificationStatus
+  //     });
+  //     console.log("User verification status updated in Firestore.");
+  //     // window.location.reload(); // Reload the page to reflect the changes
+  //   } catch (error) {
+  //     console.error("Error updating verification status:", error);
+  //   }
+  // };
 
   // Handle event upload after email verification
   const handleUpload = async () => {
@@ -166,9 +166,7 @@ const EventReview = () => {
 
   return (
     <div className="container-md mt-[48px] p-0 min-h-screen">
-      <span className="text-[32px] text-white mb-6">
-        Event <span className="text-[#FFDE00]">Review</span>
-      </span>
+      <span className="text-[32px] text-white mb-6">Event Review</span>
       {success && (
         <SuccessMessage
           message={success}
@@ -245,14 +243,14 @@ const EventReview = () => {
               ))}
             </ul> */}
             <section className="w-full flex xsm:flex-col gap-4">
-              {!userVerified && (
+              {/* {!userVerified && (
                 <button
                   className="btn btn-light w-full"
                   onClick={() => setEmailReg(true)}
                 >
                   Verify Email
                 </button>
-              )}
+              )} */}
               {userVerified && (
                 <button className="btn btn-light w-full" onClick={handleUpload}>
                   Upload Event

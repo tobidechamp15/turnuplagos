@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { updateEvent } from "../../utils/eventsFetched";
+import SuccessMessage from "../SuccessMessage";
+import ErrorMessage from "../ErrorMessage";
 
 const EditEvent = ({ event, setEditEventActive, id }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ const EditEvent = ({ event, setEditEventActive, id }) => {
     end_time: event.eventFormData.end_time || "",
     dress_code: event.eventFormData.dress_code || "",
   });
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,17 +27,21 @@ const EditEvent = ({ event, setEditEventActive, id }) => {
     const response = await updateEvent(id, formData);
 
     if (response.success) {
-      alert("Event updated successfully!");
+      setSuccess("Event updated successfully!");
       setEditEventActive(false);
     } else {
-      console.error("Update failed:", response.error);
-      alert(`Failed to update event: ${response.error}`);
+      setError(`Failed to update event `);
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   };
 
   console.log(event);
   return (
     <div className=" w-full min-h-screen  top-0 xsm:top-[78px] absolute left-0 p-4 custom-modal justify-center ">
+      {success && <SuccessMessage message={success} />}
+      {error && <ErrorMessage message={error} />}
       <form
         className="flex flex-col gap-6 p-6  border border-gray-300 rounded-2xl  bg-white shadow-lg overflow-y-auto"
         onSubmit={handleSubmit}

@@ -54,7 +54,7 @@ const ExploreLagos = () => {
         <img
           src={lagosImg}
           alt="Lagos"
-          className="xsm:w-full md:!w-[70%] md:h-[376px]"
+          className="xsm:w-full md:!w-[50%] md:h-auto object-cover md:pe-4"
         />
         <section className="flex flex-col gap-3 flex-1 text-white">
           <span className="text-[32px]">Places to Visit in Lagos.</span>

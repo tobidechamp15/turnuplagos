@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { fetchBanner } from "../utils/eventsFetched";
 import Loader from "./Loader";
+import ErrorMessage from "./ErrorMessage";
 
 const Banner = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [banners, setBanners] = useState([]);
+  const [error, setError] = useState(null);
 
   // const banners = [
   //   { id: 1, image: banner1 },
@@ -29,7 +31,10 @@ const Banner = () => {
         console.log("Error: Unable to fetch banners");
       }
     } catch (error) {
-      alert("Error fetching banners:", error);
+      setError("Error fetching banners");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     } finally {
       setIsLoading(false);
     }
@@ -72,6 +77,8 @@ const Banner = () => {
               />
             ))}
       </div>
+
+      {error && <ErrorMessage message={error} />}
       {/* Optional Navigation Dots */}
       <div className=" flex space-x-2 items-center w-full justify-center my-2 transform -translate-x-1/">
         {banners &&

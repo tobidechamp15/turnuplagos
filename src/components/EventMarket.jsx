@@ -3,10 +3,12 @@ import uploadImg from "../assets/uploadImg.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
 
 const EventMarket = () => {
   const [featureEvent, setFeatureEvent] = useState("");
   const [imagePreview, setImagePreview] = useState(uploadImg);
+  const [error, setError] = useState(null);
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     instagram: "",
     snapchat: "",
@@ -70,7 +72,10 @@ const EventMarket = () => {
   // Handle form submission
   const handleSubmit = () => {
     if (!featureEvent) {
-      alert("Please select whether you want to feature your event.");
+      setError("Please select whether you want to feature your event.");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
       return; // Stop submission if feature event is not selected
     }
     const formData = {
@@ -90,6 +95,7 @@ const EventMarket = () => {
       <span className="text-[32px] text-white mb-6">
         Event <span className="text-[#fff]">Marketing</span>
       </span>
+      {error && <ErrorMessage message={error} onClose={() => setError(null)} />}
       <div className="flex xsm:flex-col gap-2 my-3 md:flex-row">
         <div className="flex flex-col items-center gap-2">
           <img

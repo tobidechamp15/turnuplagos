@@ -5,11 +5,13 @@ import {
 } from "../utils/eventsFetched";
 import TicketCard from "./TicketCard";
 import Loader from "./Loader";
+import ErrorMessage from "./ErrorMessage";
 
 const ManageTIcket = () => {
   const [referenceCode, setReferenceCode] = useState("");
   const [ticketInfo, setTicketInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleFetchTicket = async (e) => {
     e.preventDefault();
@@ -23,7 +25,7 @@ const ManageTIcket = () => {
         const alreadyUsed = tickets.some((ticket) => ticket.isUsed);
 
         if (alreadyUsed) {
-          alert("Cannot retrieve ticket. It has already been used.");
+          setError("Cannot retrieve ticket. It has already been used.");
           return;
         } else {
           console.log(response.tickets);
@@ -32,7 +34,7 @@ const ManageTIcket = () => {
         }
       }
     } catch (error) {
-      alert("Error fetching Ticket:", error);
+      setError("Error fetching Ticket");
     } finally {
       setIsLoading(false);
     }
@@ -48,6 +50,7 @@ const ManageTIcket = () => {
     <div className="flex flex-col my-6 w-full md:px-4 container min-h-screen  md:pt-[18px]">
       ManageTIcket
       <div className="flex flex-col  gap-3 w-2/3 ">
+        {error && <ErrorMessage message={error} />}
         <form
           className="w-full flex flex-col gap-3 "
           onSubmit={handleFetchTicket}

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { deleteBanner } from "../../utils/deleteBanner";
+import SuccessMessage from "../SuccessMessage";
 
 const ConfirmDeleteBanner = ({ setDeleteConfirmation, banner }) => {
+  const [error, setError] = useState(null);
   const handleDeleteBanner = async (id) => {
     console.log(id);
     const response = await deleteBanner(banner);
@@ -10,11 +12,15 @@ const ConfirmDeleteBanner = ({ setDeleteConfirmation, banner }) => {
       setDeleteConfirmation(false);
       console.log("Banner deleted successfully");
     } else {
-      alert("Error deleting banner");
+      setError("Error deleting banner");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   };
   return (
     <div className="z-10 w-full min-h-screen flex items-center justify-center  top-0 xsm:top-[78px] absolute left-0 p-4 custom-modal">
+      {error && <SuccessMessage message={error} />}
       <div className="flex flex-col gap-3 rounded-lg items-center justify-center py-[24px] max-w-[356px] bg-white">
         <span className="text-[24px] font-bold">Delete Banner</span>
         <span className="text-[#000000B2] text-center xsm:text-[12px] px-4 ">

@@ -6,6 +6,7 @@ import AdminLoader from "./AdminLoader";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../firebase/config";
+import ErrorMessage from "../ErrorMessage";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,24 +21,34 @@ const Login = () => {
     setError("");
 
     try {
-      const auth = getAuth(app);
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredentials.user;
+      if (!email.endsWith("@turnuplagos.com")) {
+        setError("Provided email is not a required admin email");
+        setIsLoading(false);
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
+      } else {
+        const auth = getAuth(app);
+        const userCredentials = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredentials.user;
+        // if (!user.emailVerified) {
+        //   setError("Please verify your email before logging in.");
+        //   return;
+        // }
 
-      // if (!user.emailVerified) {
-      //   setError("Please verify your email before logging in.");
-      //   return;
-      // }
-
-      localStorage.setItem("userId", user.uid);
-      console.log("User logged in:", user);
-      navigate("/dashboard/overview");
+        localStorage.setItem("userId", user.uid);
+        console.log("User logged in:", user);
+        navigate("/dashboard/overview");
+      }
     } catch (error) {
       setError("Failed to log in. Please check your credentials.");
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
       console.error("Login Error:", error);
     } finally {
       setIsLoading(false);
@@ -86,10 +97,10 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Link to="/forgot-password" className="text-end text-primary">
-            Forgot Password
+          <Link to="/forgot-password" className="text-end text-danger">
+            Forgot Password?
           </Link>
-          {error && <div className="text-red-500">{error}</div>}
+          {error && <ErrorMessage message={error} />}
 
           <button
             type="submit"

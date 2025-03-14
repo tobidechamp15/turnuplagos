@@ -96,6 +96,9 @@ const PromoteBanner = () => {
             setImagePreview(resizedImage);
           } else {
             setError("Image must be over 1440px by width and 300px by height");
+            setTimeout(() => {
+              setError(null);
+            }, 2000);
             // alert(
             //   `Image must be exactly ${targetWidth}px by ${targetHeight}px.`
             // );
@@ -348,7 +351,7 @@ const PromoteBanner = () => {
         )} */}
         {userVerified && (
           <button className="btn btn-light w-fit" onClick={handleUpload}>
-            Upload Event to Admin
+            Upload Event
           </button>
         )}
       </section>
