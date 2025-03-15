@@ -445,7 +445,6 @@ hr {
   border: 1px solid #909193;
 }
 .text-head {
-  font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -454,7 +453,6 @@ hr {
   color: #000000;
 }
 .text-mot {
-  font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -463,7 +461,6 @@ hr {
   color: rgba(0, 0, 0, 0.7);
 }
 .cus-label {
-  font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -477,7 +474,6 @@ hr {
   border-radius: 8px;
   padding: 10px;
   width: 100%;
-  font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
